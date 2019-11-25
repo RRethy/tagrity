@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require "tagrity/cli"
+Tagrity::CLI.start(ARGV)

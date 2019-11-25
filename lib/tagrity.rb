@@ -1,0 +1,2 @@
+module Tagrity
+end
