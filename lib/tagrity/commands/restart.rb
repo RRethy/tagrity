@@ -1,12 +1,11 @@
 module Tagrity
   module Command
     class Restart
-      def initialize(dir)
-        @dir = dir
-      end
-
-      def call
-        puts "called restart #{@dir}"
+      class << self
+        def call(dir, fg)
+          Command::Stop.call(dir)
+          Command::Start.call(dir, fg)
+        end
       end
     end
   end

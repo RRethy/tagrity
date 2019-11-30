@@ -1,12 +1,10 @@
 module Tagrity
   module Command
     class Stop
-      def initialize(dir)
-        @dir = dir
-      end
+      class << self
+        def call(dir)
 
-      def call
-        puts "called stop #{@dir}"
+        end
       end
     end
   end

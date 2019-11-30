@@ -1,5 +1,8 @@
 require 'thor'
 require 'tagrity/commands/start'
+require 'tagrity/commands/stop'
+require 'tagrity/commands/restart'
+require 'tagrity/commands/list'
 
 module Tagrity
   class CLI < Thor
@@ -7,25 +10,25 @@ module Tagrity
     option :dir
     option :fg, type: :boolean
     def start()
-      Command::Start.new(dir, fg?).call
+      Command::Start::call(dir, fg?)
     end
 
     desc "stop", "Stop watching pwd or DIR"
     option :dir
     def stop()
-      Command::Stop.new(dir).call
+      Command::Stop::call(dir)
     end
 
     desc "restart", "Stop watching pwd or DIR. Start watching pwd or DIR again"
     option :dir
     option :fg, type: :boolean
     def restart()
-      Command::Restart.new(dir).call
+      Command::Restart::call(dir, fg)
     end
 
     desc "list", "list running tagrity processes watching directories"
     def list
-      Command::List.new.call
+      Command::List::call
     end
 
     private
