@@ -23,7 +23,7 @@ module Tagrity
     option :dir
     option :fg, type: :boolean
     def restart()
-      Command::Restart::call(dir, fg)
+      Command::Restart::call(dir, fg?)
     end
 
     desc "list", "list running tagrity processes watching directories"

@@ -2,6 +2,8 @@ module Tagrity
   class PidFile
     RUN_DIR = "#{__dir__}/../../var/run"
 
+    attr_reader :pid
+
     def initialize(dir, pid)
       @dir = dir
       @pid = pid
@@ -20,21 +22,14 @@ module Tagrity
         File.write("#{run_dir}/#{pid_file.name}", pid_file.contents)
       end
 
-      def delete(dir)
-        pid_file_path = Dir.glob("#{run_dir}/#{dir.split('/').last}.*.pid").find do |path|
-          full_dir = File.read(path)
-          File.realdirpath(full_dir) == File.realdirpath(dir)
-        end
-
-        if pid_file_path
-          File.delete(pid_file_path)
-          pid_file_path.split('.')[-2]
-        end
+      def delete(dir: nil, pid_file: nil)
+        delete_for_dir(dir) if dir
+        delete_pid_file(pid_file) if pid_file
       end
 
       def list(dir: nil)
         Dir.glob("#{run_dir}/*").reduce([]) do |pid_files, path|
-          pid = path.split('.')[-2].to_i
+          pid = pid_from_path(path)
           pid_file_dir = File.read(path)
 
           if dir.nil? || File.realdirpath(pid_file_dir) == File.realdirpath(dir)
@@ -51,6 +46,23 @@ module Tagrity
 
       private
 
+      def delete_for_dir(dir)
+        pid_file_paths = Dir.glob("#{run_dir}/#{dir.split('/').last}.*.pid").select do |path|
+          full_dir = File.read(path)
+          File.realdirpath(full_dir) == File.realdirpath(dir)
+        end
+
+        pid_file_paths.each do |path|
+          File.delete(path)
+          ProcessHelper.kill(pid_from_path(path))
+        end
+      end
+
+      def delete_pid_file(pid_file)
+        File.delete(full_path(pid_file.name))
+        ProcessHelper.kill(pid_file.pid.to_i)
+      end
+
       def ensure_dirs
         return if @ensure_dirs_done
         FileUtils.mkdir_p(RUN_DIR)
@@ -60,6 +72,14 @@ module Tagrity
       def run_dir
         ensure_dirs
         RUN_DIR
+      end
+
+      def full_path(pid_file_name)
+        "#{run_dir}/#{pid_file_name}"
+      end
+
+      def pid_from_path(pid_file_name)
+        pid_file_name.split('.')[-2].to_i
       end
     end
   end

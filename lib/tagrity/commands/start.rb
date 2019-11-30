@@ -5,13 +5,11 @@ require 'tagrity/process_helper'
 module Tagrity
   module Command
     class Start
-      class ErrorAlreadyRunning < StandardError; end
+      class ErrorProcessAlreadyRunning < StandardError; end
 
       class << self
         def call(dir, fg)
-          unless PidFile.list(dir: dir).empty?
-            raise ErrorAlreadyRunning, "Error: tagrity is already watching #{dir}"
-          end
+          assert_not_running(dir)
 
           Process.daemon unless fg
           PidFile.write(PidFile.new(dir, Process.pid))
@@ -25,10 +23,20 @@ module Tagrity
           end
           listener.start
           sleep
-        rescue ErrorAlreadyRunning => e
+        rescue ErrorProcessAlreadyRunning => e
           puts e.message
         rescue Interrupt => e
-          PidFile.delete(dir)
+          PidFile.delete(dir: dir)
+        end
+
+        private
+
+        def assert_not_running(dir)
+          running_processes = PidFile.list(dir: dir)
+          unless running_processes.empty?
+            pids = running_processes.map { |pid_file| pid_file.pid }
+            raise ErrorProcessAlreadyRunning, "Error: tagrity is already watching #{dir} with process #{pids}"
+          end
         end
       end
     end
