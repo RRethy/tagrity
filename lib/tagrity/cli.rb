@@ -2,7 +2,7 @@ require 'thor'
 require 'tagrity/commands/start'
 require 'tagrity/commands/stop'
 require 'tagrity/commands/restart'
-require 'tagrity/commands/list'
+require 'tagrity/commands/status'
 
 module Tagrity
   class CLI < Thor
@@ -26,9 +26,9 @@ module Tagrity
       Command::Restart::call(dir, fg?)
     end
 
-    desc "list", "list running tagrity processes watching directories"
-    def list
-      Command::List::call
+    desc "status", "status running tagrity processes watching directories"
+    def status
+      Command::Status::call
     end
 
     private

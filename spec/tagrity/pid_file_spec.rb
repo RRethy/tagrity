@@ -42,7 +42,7 @@ RSpec.describe Tagrity::PidFile do
     Tagrity::PidFile.delete('/foo')
   end
 
-  it "lists all alive dirs when none are specified" do
+  it "lists all alive dirs when none are specified to status" do
     allow(Dir)
       .to receive(:glob)
       .and_return(['/foo.123.pid', '/foo.124.pid', '/foo.125.pid', '/bar.126.pid', '/foo.127.pid'])
@@ -58,7 +58,7 @@ RSpec.describe Tagrity::PidFile do
     expect(File)
       .to receive(:delete)
       .with('/foo.127.pid')
-    expect(Tagrity::PidFile.list)
+    expect(Tagrity::PidFile.status)
       .to eq([
         Tagrity::PidFile.new('/foo', 123),
         Tagrity::PidFile.new('/foo/bar', 124),
@@ -67,7 +67,7 @@ RSpec.describe Tagrity::PidFile do
     ])
   end
 
-  it "lists only matching directories" do
+  it "lists only matching directories to status" do
     allow(Dir)
       .to receive(:glob)
       .and_return(['/foo.123.pid', '/foo.124.pid', '/foo.125.pid', '/bar.126.pid', '/foo.127.pid'])
@@ -86,7 +86,7 @@ RSpec.describe Tagrity::PidFile do
     expect(File)
       .to receive(:delete)
       .with('/foo.127.pid')
-    expect(Tagrity::PidFile.list(dir: '/foo'))
+    expect(Tagrity::PidFile.status(dir: '/foo'))
       .to eq([
         Tagrity::PidFile.new('/foo', 123),
         Tagrity::PidFile.new('/foo', 125),

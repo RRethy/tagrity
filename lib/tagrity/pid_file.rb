@@ -19,7 +19,7 @@ module Tagrity
         end
       end
 
-      def list(dir: nil)
+      def status(dir: nil)
         Dir.glob("#{run_dir}/*").reduce([]) do |pid_files, path|
           pid = pid_from_path(path)
           pid_file_dir = File.read(path)

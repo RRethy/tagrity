@@ -32,7 +32,7 @@ module Tagrity
         private
 
         def assert_not_running(dir)
-          running_processes = PidFile.list(dir: dir)
+          running_processes = PidFile.status(dir: dir)
           unless running_processes.empty?
             pids = running_processes.map { |pid_file| pid_file.pid }
             raise ErrorProcessAlreadyRunning, "Error: tagrity is already watching #{dir} with process #{pids}"
