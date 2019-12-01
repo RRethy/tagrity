@@ -3,7 +3,7 @@ module Tagrity
     class Stop
       class << self
         def call(dir)
-          pid_files = PidFile.status(dir: dir)
+          pid_files = PidFile.alive_pid_files(dir: dir)
           if pid_files.empty?
             puts "😕 tagrity doesn't seem to be watching #{dir}"
           else

@@ -3,7 +3,7 @@ module Tagrity
     class Status
       class << self
         def call
-          PidFile.status.each do |pid_file|
+          PidFile.alive_pid_files.each do |pid_file|
             puts "#{pid_file.pid} #{pid_file.dir}"
           end
         end
