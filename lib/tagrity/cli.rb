@@ -34,7 +34,9 @@ module Tagrity
     private
 
     def dir
-      options[:dir] || Dir.pwd
+      dir = options[:dir] || Dir.pwd
+      raise Errno::ENOENT, "No such directory - #{dir}" unless Dir.exists?(dir)
+      dir
     end
 
     def fg?
