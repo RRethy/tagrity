@@ -26,7 +26,7 @@ module Tagrity
         rescue ErrorProcessAlreadyRunning => e
           puts e.message
         rescue Interrupt => e
-          PidFile.delete(dir: dir)
+          PidFile.delete(dir)
         end
 
         private

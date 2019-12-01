@@ -2,29 +2,21 @@ module Tagrity
   class PidFile
     RUN_DIR = "#{__dir__}/../../var/run"
 
-    attr_reader :pid
-
-    def initialize(dir, pid)
-      @dir = dir
-      @pid = pid
-    end
-
-    def name
-      "#{@dir.split('/').last}.#{@pid}.pid"
-    end
-
-    def contents
-      @dir
-    end
-
     class << self
       def write(pid_file)
-        File.write("#{run_dir}/#{pid_file.name}", pid_file.contents)
+        File.write("#{run_dir}/#{pid_file.name}", pid_file.dir)
       end
 
-      def delete(dir: nil, pid_file: nil)
-        delete_for_dir(dir) if dir
-        delete_pid_file(pid_file) if pid_file
+      def delete(dir)
+        pid_file_paths = Dir.glob("#{run_dir}/#{dir.split('/').last}.*.pid").select do |path|
+          full_dir = File.read(path)
+          File.realdirpath(full_dir) == File.realdirpath(dir)
+        end
+
+        pid_file_paths.each do |path|
+          File.delete(path)
+          ProcessHelper.kill(pid_from_path(path))
+        end
       end
 
       def list(dir: nil)
@@ -44,24 +36,12 @@ module Tagrity
         end
       end
 
+      def run_dir
+        ensure_dirs
+        RUN_DIR
+      end
+
       private
-
-      def delete_for_dir(dir)
-        pid_file_paths = Dir.glob("#{run_dir}/#{dir.split('/').last}.*.pid").select do |path|
-          full_dir = File.read(path)
-          File.realdirpath(full_dir) == File.realdirpath(dir)
-        end
-
-        pid_file_paths.each do |path|
-          File.delete(path)
-          ProcessHelper.kill(pid_from_path(path))
-        end
-      end
-
-      def delete_pid_file(pid_file)
-        File.delete(full_path(pid_file.name))
-        ProcessHelper.kill(pid_file.pid.to_i)
-      end
 
       def ensure_dirs
         return if @ensure_dirs_done
@@ -69,18 +49,31 @@ module Tagrity
         @ensure_dirs_done = true
       end
 
-      def run_dir
-        ensure_dirs
-        RUN_DIR
-      end
-
-      def full_path(pid_file_name)
-        "#{run_dir}/#{pid_file_name}"
-      end
-
       def pid_from_path(pid_file_name)
         pid_file_name.split('.')[-2].to_i
       end
+    end
+
+    attr_reader :pid, :dir
+
+    def initialize(dir, pid)
+      @dir = dir
+      @pid = pid
+    end
+
+    def name
+      "#{@dir.split('/').last}.#{@pid}.pid"
+    end
+
+    def delete
+      File.delete(pid_file_path)
+      ProcessHelper.kill(pid.to_i)
+    end
+
+    private
+
+    def pid_file_path
+      "#{PidFile.run_dir}/#{name}"
     end
   end
 end

@@ -8,7 +8,7 @@ module Tagrity
             puts "😕 tagrity doesn't seem to be watching #{dir}"
           else
             pid_files.each do |pid_file|
-              PidFile.delete(pid_file: pid_file)
+              pid_file.delete
               puts "Successfully killed #{pid_file.pid}"
             end
           end
