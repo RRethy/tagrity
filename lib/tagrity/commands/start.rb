@@ -20,9 +20,9 @@ module Tagrity
           listener = Listen.to(
             dir,
             ignore: [/tags/],
+            relative: true,
           ) do |modified, added, removed|
             callbacks.on_files_modified(modified)
-            callbacks.foobarbaz(modified)
             callbacks.on_files_added(added)
             callbacks.on_files_removed(removed)
             puts "modified absolute paths: #{modified}"
