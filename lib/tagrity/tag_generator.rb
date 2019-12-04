@@ -4,10 +4,12 @@ module Tagrity
     end
 
     def generate(files)
-      `ripper-tags -f tags --append=yes #{files.join(' ')}`
+      return if files.empty?
+      `ctags -f tags --append #{files.join(' ')}`
     end
 
     def delete_files_tags(files)
+      return if files.empty?
       `cat tags | grep -v -F #{files.map { |f| " -e \"#{f}\""}.join(' ')} > .tags`
       `mv .tags tags`
     end

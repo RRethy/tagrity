@@ -1,6 +1,7 @@
 require 'listen'
 require 'tagrity/pid_file'
 require 'tagrity/process_helper'
+require 'tagrity/file_callbacks'
 
 module Tagrity
   module Command
@@ -11,12 +12,19 @@ module Tagrity
         def call(dir, fg)
           assert_not_running(dir)
 
+          callbacks = FileCallbacks.new
+
           Process.daemon unless fg
           PidFile.write(PidFile.new(dir, Process.pid))
 
           listener = Listen.to(
             dir,
+            ignore: [/tags/],
           ) do |modified, added, removed|
+            callbacks.on_files_modified(modified)
+            callbacks.foobarbaz(modified)
+            callbacks.on_files_added(added)
+            callbacks.on_files_removed(removed)
             puts "modified absolute paths: #{modified}"
             puts "added absolute paths: #{added}"
             puts "removed absolute paths: #{removed}"
