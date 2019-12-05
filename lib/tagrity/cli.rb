@@ -6,20 +6,20 @@ require 'tagrity/commands/status'
 
 module Tagrity
   class CLI < Thor
-    desc "start", "Start watching pwd or DIR"
+    desc "start", "Start watching a directory (default to pwd)"
     option :dir
     option :fg, type: :boolean
     def start()
       Command::Start::call(dir, fg?)
     end
 
-    desc "stop", "Stop watching pwd or DIR"
+    desc "stop", "Stop watching a directory (default to pwd)"
     option :dir
     def stop()
       Command::Stop::call(dir)
     end
 
-    desc "restart", "Stop watching pwd or DIR. Start watching pwd or DIR again"
+    desc "restart", "Stop watching a directory (default to pwd). Start watching a directory (default to pwd)"
     option :dir
     option :fg, type: :boolean
     def restart()
