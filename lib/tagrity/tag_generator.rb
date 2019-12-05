@@ -11,7 +11,7 @@ module Tagrity
 
     def generate(files)
       return if files.empty?
-      `ctags -f tags --append #{files.join(' ')}`
+      `ripper-tags -f tags --append #{files.join(' ')}`
     end
 
     def delete_files_tags(files)
