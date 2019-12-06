@@ -1,0 +1,93 @@
+!_TAG_FILE_FORMAT	1	/original ctags format/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/b1621cf/
+==	lib/tagrity/pid_file.rb	/^    def ==(other)$/
+Attribution	CODE_OF_CONDUCT.md	/^## Attribution$/
+CLI	lib/tagrity/cli.rb	/^  class CLI < Thor$/
+Code of Conduct	README.md	/^## Code of Conduct$/
+Command	lib/tagrity/commands/restart.rb	/^  module Command$/
+Command	lib/tagrity/commands/start.rb	/^  module Command$/
+Command	lib/tagrity/commands/status.rb	/^  module Command$/
+Command	lib/tagrity/commands/stop.rb	/^  module Command$/
+ConfigFile	lib/tagrity/config_file.rb	/^  class ConfigFile$/
+Contributing	README.md	/^## Contributing$/
+Contributor Covenant Code of Conduct	CODE_OF_CONDUCT.md	/^# Contributor Covenant Code of Conduct$/
+Development	README.md	/^## Development$/
+Enforcement	CODE_OF_CONDUCT.md	/^## Enforcement$/
+ErrorProcessAlreadyRunning	lib/tagrity/commands/start.rb	/^      class ErrorProcessAlreadyRunning < StandardError; end$/
+ExecutableNonExist	lib/tagrity/tag_generator.rb	/^    class ExecutableNonExist < StandardError; end$/
+FileCallbacks	lib/tagrity/file_callbacks.rb	/^  class FileCallbacks$/
+Installation	README.md	/^## Installation$/
+License	README.md	/^## License$/
+Our Pledge	CODE_OF_CONDUCT.md	/^## Our Pledge$/
+Our Responsibilities	CODE_OF_CONDUCT.md	/^## Our Responsibilities$/
+Our Standards	CODE_OF_CONDUCT.md	/^## Our Standards$/
+PidFile	lib/tagrity/pid_file.rb	/^  class PidFile$/
+ProcessHelper	lib/tagrity/process_helper.rb	/^  class ProcessHelper$/
+Restart	lib/tagrity/commands/restart.rb	/^    class Restart$/
+Scope	CODE_OF_CONDUCT.md	/^## Scope$/
+SessionLoad	Session.vim	/^let SessionLoad = 1$/
+Start	lib/tagrity/commands/start.rb	/^    class Start$/
+Status	lib/tagrity/commands/status.rb	/^    class Status$/
+Stop	lib/tagrity/commands/stop.rb	/^    class Stop$/
+TagGenerator	lib/tagrity/tag_generator.rb	/^  class TagGenerator$/
+Tagrity	README.md	/^# Tagrity$/
+Tagrity	lib/tagrity.rb	/^module Tagrity$/
+Tagrity	lib/tagrity/cli.rb	/^module Tagrity$/
+Tagrity	lib/tagrity/commands/restart.rb	/^module Tagrity$/
+Tagrity	lib/tagrity/commands/start.rb	/^module Tagrity$/
+Tagrity	lib/tagrity/commands/status.rb	/^module Tagrity$/
+Tagrity	lib/tagrity/commands/stop.rb	/^module Tagrity$/
+Tagrity	lib/tagrity/config_file.rb	/^module Tagrity$/
+Tagrity	lib/tagrity/file_callbacks.rb	/^module Tagrity$/
+Tagrity	lib/tagrity/pid_file.rb	/^module Tagrity$/
+Tagrity	lib/tagrity/process_helper.rb	/^module Tagrity$/
+Tagrity	lib/tagrity/tag_generator.rb	/^module Tagrity$/
+Tagrity	lib/tagrity/version.rb	/^module Tagrity$/
+Tagrity	spec/tagrity_spec.rb	/^RSpec.describe Tagrity do$/
+Tagrity::PidFile	spec/tagrity/pid_file_spec.rb	/^RSpec.describe Tagrity::PidFile do$/
+Usage	README.md	/^## Usage$/
+alive?	lib/tagrity/process_helper.rb	/^      def alive?(pid)$/
+alive_pid_files	lib/tagrity/pid_file.rb	/^      def alive_pid_files(dir: nil)$/
+assert_executables	lib/tagrity/tag_generator.rb	/^    def assert_executables$/
+assert_not_running	lib/tagrity/commands/start.rb	/^        def assert_not_running(dir)$/
+call	lib/tagrity/commands/restart.rb	/^        def call(dir, fg)$/
+call	lib/tagrity/commands/start.rb	/^        def call(dir, fg)$/
+call	lib/tagrity/commands/status.rb	/^        def call$/
+call	lib/tagrity/commands/stop.rb	/^        def call(dir)$/
+delete	lib/tagrity/pid_file.rb	/^      def delete(dir)$/
+delete	lib/tagrity/pid_file.rb	/^    def delete$/
+delete_files_tags	lib/tagrity/tag_generator.rb	/^    def delete_files_tags(files)$/
+dir	lib/tagrity/cli.rb	/^    def dir$/
+ensure_dirs	lib/tagrity/pid_file.rb	/^      def ensure_dirs$/
+fg?	lib/tagrity/cli.rb	/^    def fg?$/
+generate	lib/tagrity/tag_generator.rb	/^    def generate(files)$/
+generate_all	lib/tagrity/tag_generator.rb	/^    def generate_all$/
+initialize	lib/tagrity/config_file.rb	/^    def initialize(opts = {})$/
+initialize	lib/tagrity/file_callbacks.rb	/^    def initialize$/
+initialize	lib/tagrity/pid_file.rb	/^    def initialize(dir, pid)$/
+initialize	lib/tagrity/tag_generator.rb	/^    def initialize$/
+is_same_dirs	lib/tagrity/pid_file.rb	/^      def is_same_dirs(dir1, dir2)$/
+kill	lib/tagrity/process_helper.rb	/^      def kill(pid)$/
+name	lib/tagrity/pid_file.rb	/^    def name$/
+on_files_added	lib/tagrity/file_callbacks.rb	/^    def on_files_added(files)$/
+on_files_modified	lib/tagrity/file_callbacks.rb	/^    def on_files_modified(files)$/
+on_files_removed	lib/tagrity/file_callbacks.rb	/^    def on_files_removed(files)$/
+pid_file_path	lib/tagrity/pid_file.rb	/^    def pid_file_path$/
+pid_from_path	lib/tagrity/pid_file.rb	/^      def pid_from_path(pid_file_name)$/
+restart	lib/tagrity/cli.rb	/^    def restart()$/
+run_dir	lib/tagrity/pid_file.rb	/^      def run_dir$/
+s:l	Session.vim	/^let s:l = 17 - ((10 * winheight(0) + 17) \/ 35)$/
+s:l	Session.vim	/^let s:l = 3 - ((2 * winheight(0) + 9) \/ 18)$/
+s:l	Session.vim	/^let s:l = 7 - ((2 * winheight(0) + 8) \/ 16)$/
+s:so_save	Session.vim	/^let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0$/
+s:sx	Session.vim	/^let s:sx = expand("<sfile>:p:r")."x.vim"$/
+s:wipebuf	Session.vim	/^  let s:wipebuf = bufnr('%')$/
+start	lib/tagrity/cli.rb	/^    def start()$/
+status	lib/tagrity/cli.rb	/^    def status$/
+stop	lib/tagrity/cli.rb	/^    def stop()$/
+write	lib/tagrity/pid_file.rb	/^      def write(pid_file)$/

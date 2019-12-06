@@ -19,7 +19,7 @@ module Tagrity
 
           listener = Listen.to(
             dir,
-            ignore: [/tags/],
+            ignore: [/^tags$/],
             relative: true,
           ) do |modified, added, removed|
             callbacks.on_files_modified(modified)
