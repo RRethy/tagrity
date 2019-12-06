@@ -16,7 +16,7 @@ module Tagrity
 
     def delete_files_tags(files)
       return if files.empty?
-      `cat tags | grep -v -F #{files.map { |f| " -e \"#{f}\""}.join(' ')} > .tags`
+      `cat tags | grep -v -F #{files.map { |f| " -e \"	#{f}	\""}.join(' ')} > .tags`
       `mv .tags tags`
     end
 
