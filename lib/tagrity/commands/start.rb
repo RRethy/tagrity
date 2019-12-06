@@ -14,7 +14,7 @@ module Tagrity
 
           callbacks = FileCallbacks.new
 
-          Process.daemon unless fg
+          Process.daemon(nochdir: true) unless fg
           PidFile.write(PidFile.new(dir, Process.pid))
 
           listener = Listen.to(
