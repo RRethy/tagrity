@@ -1,0 +1,5 @@
+language_cmds:
+  rb: ripper-tags
+  c: ctags
+default_cmd: ctags
+excluded_fts: [erb, tsx]
