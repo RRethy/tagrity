@@ -2,6 +2,7 @@ require 'listen'
 require 'tagrity/pid_file'
 require 'tagrity/process_helper'
 require 'tagrity/file_callbacks'
+require 'tagrity/provider'
 
 module Tagrity
   module Command
@@ -12,9 +13,9 @@ module Tagrity
         def call(dir, fg)
           assert_not_running(dir)
 
-          callbacks = FileCallbacks.new
-
           Process.daemon(nochdir: true) unless fg
+
+          callbacks = Provider.provide(:file_callbacks)
           PidFile.write(PidFile.new(dir, Process.pid))
 
           listener = Listen.to(
