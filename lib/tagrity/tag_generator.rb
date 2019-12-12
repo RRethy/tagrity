@@ -12,7 +12,7 @@ module Tagrity
     def generate(files)
       return if files.empty?
       files
-        .select { |file| !dont_index_file(file) && File.readable?(file) }
+        .select { |file| generate_tags?(file) }
         .group_by { |file| @config.ft_to_cmd(file.partition('.').last) }
         .each do |cmd, fnames|
         `#{cmd} -f #{tagf} --append #{fnames.join(' ')}`
@@ -32,6 +32,10 @@ module Tagrity
     end
 
     private
+
+    def generate_tags?(file)
+      file != '.tags' && file != tagf && !dont_index_file(file) && File.readable?(file)
+    end
 
     def dont_index_file(fname)
       @config.is_ft_excluded(fname.partition('.').last) || @config.is_path_excluded(fname)
