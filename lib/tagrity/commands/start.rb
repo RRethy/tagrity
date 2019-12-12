@@ -1,6 +1,6 @@
 require 'listen'
 require 'tagrity/pid_file'
-require 'tagrity/process_helper'
+require 'tagrity/helper'
 require 'tagrity/file_callbacks'
 require 'tagrity/provider'
 

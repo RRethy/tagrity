@@ -1,15 +1,15 @@
 require 'tagrity/pid_file'
-require 'tagrity/process_helper'
+require 'tagrity/helper'
 
 RSpec.describe Tagrity::PidFile do
   it "writes the correct file" do
     pid_file = Tagrity::PidFile.new('foo/bar/baz', '1876')
     expect(File)
       .to receive(:write)
-      .with("#{Tagrity::PidFile::RUN_DIR}/baz.1876.pid", "foo/bar/baz")
-    expect(Tagrity::PidFile)
+      .with("#{Tagrity::Helper::RUN_DIR}/baz.1876.pid", "foo/bar/baz")
+    expect(Tagrity::Helper)
       .to receive(:run_dir)
-      .and_return(Tagrity::PidFile::RUN_DIR)
+      .and_return(Tagrity::Helper::RUN_DIR)
 
     Tagrity::PidFile.write(pid_file)
   end
@@ -29,15 +29,15 @@ RSpec.describe Tagrity::PidFile do
     expect(File)
       .to receive(:delete)
       .with('foo.124.pid')
-    expect(Tagrity::ProcessHelper)
+    expect(Tagrity::Helper)
       .to receive(:kill)
       .with(123)
-    expect(Tagrity::ProcessHelper)
+    expect(Tagrity::Helper)
       .to receive(:kill)
       .with(124)
-    expect(Tagrity::PidFile)
+    expect(Tagrity::Helper)
       .to receive(:run_dir)
-      .and_return(Tagrity::PidFile::RUN_DIR)
+      .and_return(Tagrity::Helper::RUN_DIR)
 
     Tagrity::PidFile.delete('/foo')
   end
@@ -50,7 +50,7 @@ RSpec.describe Tagrity::PidFile do
       .to receive(:read)
       .exactly(4).times
       .and_return('/foo', '/foo/bar', '/foo', '/bar', '/foo')
-    allow(Tagrity::ProcessHelper)
+    allow(Tagrity::Helper)
       .to receive(:alive?)
       .exactly(5).times
       .and_return(true, true, true, true, false)
@@ -75,7 +75,7 @@ RSpec.describe Tagrity::PidFile do
       .to receive(:read)
       .exactly(4).times
       .and_return('/foo', '/foo/bar', '/foo', '/bar', '/foo')
-    allow(Tagrity::ProcessHelper)
+    allow(Tagrity::Helper)
       .to receive(:alive?)
       .exactly(5).times
       .and_return(true, true, false)

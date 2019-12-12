@@ -1,6 +1,17 @@
 module Tagrity
-  class ProcessHelper
+  class Helper
+    RUN_DIR = "#{ENV['HOME']}/.tagrity/var/run"
+
     class << self
+      def run_dir
+        ensure_data_dirs
+        RUN_DIR
+      end
+
+      def is_executable(cmd)
+        !%x{command -v #{cmd}}.empty?
+      end
+
       def kill(pid)
         Process.kill('HUP', pid)
       end
@@ -12,6 +23,12 @@ module Tagrity
         false
       rescue Errno::EPERM
         true
+      end
+
+      private
+
+      def ensure_data_dirs
+        FileUtils.mkdir_p(RUN_DIR)
       end
     end
   end

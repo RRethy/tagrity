@@ -1,6 +1,6 @@
 require 'yaml'
 require 'singleton'
-require 'tagrity/executable_helper'
+require 'tagrity/helper'
 
 module Tagrity
   class ConfigFile
@@ -26,7 +26,7 @@ module Tagrity
 
     def ft_to_cmd(ext)
       ft_cmd = @config['ext_cmds'][ext]
-      return @config['default_cmd'] if ft_cmd.nil? || !ExecutableHelper.is_executable(ft_cmd)
+      return @config['default_cmd'] if ft_cmd.nil? || !Helper.is_executable(ft_cmd)
       ft_cmd
     end
 

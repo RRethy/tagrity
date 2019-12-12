@@ -1,4 +1,4 @@
-require 'tagrity/executable_helper'
+require 'tagrity/helper'
 
 module Tagrity
   class TagGenerator
@@ -39,7 +39,7 @@ module Tagrity
 
     def assert_executables
       %w(cat grep mv).each do |exe|
-        if !ExecutableHelper.is_executable(exe)
+        if !Helper.is_executable(exe)
           raise ExecutableNonExist, "tagrity depends on the executable #{exe}"
         end
       end
