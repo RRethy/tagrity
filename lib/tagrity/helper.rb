@@ -1,6 +1,8 @@
 module Tagrity
   class Helper
-    RUN_DIR = "#{ENV['HOME']}/.tagrity/var/run"
+    root = ENV['TEST'] ? __dir__ : "#{ENV['HOME']}/.tagrity/"
+    RUN_DIR = File.join(root, 'var/run').freeze
+    LOG_DIR = File.join(root, 'var/log').freeze
 
     class << self
       def run_dir
