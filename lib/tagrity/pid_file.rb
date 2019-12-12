@@ -1,6 +1,6 @@
 module Tagrity
   class PidFile
-    RUN_DIR = "#{__dir__}/../../var/run"
+    RUN_DIR = "#{ENV['HOME']}/.tagrity/var/run"
 
     class << self
       def write(pid_file)
