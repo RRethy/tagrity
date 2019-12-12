@@ -9,24 +9,23 @@ module Tagrity
       @config = ConfigFile.instance
     end
 
-    def generate_all
-    end
-
     def generate(files)
       return if files.empty?
-      # TODO assert files and tags writeable
       files
-        .select { |file| !dont_index_file(file) }
+        .select { |file| !dont_index_file(file) && File.readable?(file) }
         .group_by { |file| @config.ft_to_cmd(file.partition('.').last) }
         .each do |cmd, fnames|
         `#{cmd} -f #{tagf} --append #{fnames.join(' ')}`
-        puts "{#{cmd}} generated tags for #{fnames} into #{tagf}"
+        if $?.exitstatus != 0
+          puts "{#{cmd}} failed to generate tags for #{fnames} into #{tagf}"
+        else
+          puts "{#{cmd}} generated tags for #{fnames} into #{tagf}"
+        end
       end
     end
 
     def delete_files_tags(files)
       return if files.empty?
-      # TODO assert file readable
       `cat #{tagf} | grep -v -F #{files.map { |f| " -e \"	#{f}	\""}.join(' ')} > .tagrity.tags`
       `mv -f .tagrity.tags #{tagf}`
       puts "Deleted tags for #{files} from #{tagf}"

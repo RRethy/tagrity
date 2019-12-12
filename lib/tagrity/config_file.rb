@@ -6,6 +6,8 @@ module Tagrity
   class ConfigFile
     include Singleton
 
+    class ErrorTagFileNotWritable < StandardError; end
+
     def init(
       configfile:,
       default_cmd:,
@@ -33,7 +35,7 @@ module Tagrity
     end
 
     def is_path_excluded(path)
-      @config['excluded_paths'].any? { |pat| /^#{pat}.*/ =~ path }
+      @config['excluded_paths'].any? { |pat| /^(\.\/)?#{pat}.*/ =~ path }
     end
 
     def tagf
@@ -64,6 +66,9 @@ module Tagrity
 
     def ensure_tagf(tagf)
       set_option('tagf', tagf, 'tags')
+      unless File.writable?(@config['tagf'])
+        raise ErrorTagFileNotWritable, "#{@config['tagf']} must be writable to be used as the tag file."
+      end
     end
 
     def set_option(key, local_val, default)

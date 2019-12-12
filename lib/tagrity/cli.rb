@@ -10,6 +10,7 @@ module Tagrity
     option :fg, type: :boolean
     option :configfile
     option :tagf
+    option :default_cmd
     option :excluded_exts, type: :array
     option :excluded_paths, type: :array
     def start()
