@@ -5,29 +5,21 @@ require 'tagrity/tag_generator'
 module Tagrity
   class Provider
     class << self
-      def provide(want, opts: {})
+      def provide(want)
         case want
         when :file_callbacks
-          provide_file_callbacks(opts)
+          provide_file_callbacks
         when :tag_generator
-          provide_tag_generator(opts)
-        when :config_file
-          provide_config_file(opts)
+          provide_tag_generator
         end
       end
 
-      private
-
-      def provide_file_callbacks(opts: {})
-        FileCallbacks.new(provide_tag_generator(opts))
+      def provide_file_callbacks
+        FileCallbacks.new(provide(:tag_generator))
       end
 
-      def provide_tag_generator(opts: {})
-        TagGenerator.new(provide_config_file(opts))
-      end
-
-      def provide_config_file(opts: {})
-        ConfigFile.new(opts[:config_file])
+      def provide_tag_generator
+        TagGenerator.new
       end
     end
   end

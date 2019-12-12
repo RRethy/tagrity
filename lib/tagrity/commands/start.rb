@@ -20,15 +20,12 @@ module Tagrity
 
           listener = Listen.to(
             dir,
-            ignore: [/^tags$/],
+            ignore: [/^\.?tags$/],
             relative: true,
           ) do |modified, added, removed|
             callbacks.on_files_modified(modified)
             callbacks.on_files_added(added)
             callbacks.on_files_removed(removed)
-            puts "modified absolute paths: #{modified}"
-            puts "added absolute paths: #{added}"
-            puts "removed absolute paths: #{removed}"
           end
           listener.start
           sleep
