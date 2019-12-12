@@ -24,7 +24,7 @@ module Tagrity
       Command::Stop::call(dir)
     end
 
-    desc "status", "status running tagrity processes watching directories"
+    desc "status", "List running tagrity processes and the directories being watched"
     def status
       Command::Status::call
     end
