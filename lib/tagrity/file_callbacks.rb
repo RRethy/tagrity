@@ -1,9 +1,10 @@
 require 'tagrity/tag_generator'
+require 'tagrity/config_file'
 
 module Tagrity
   class FileCallbacks
-    def initialize
-      @tag_generator = TagGenerator.new
+    def initialize(tag_generator)
+      @tag_generator = tag_generator
     end
 
     def on_files_modified(files)

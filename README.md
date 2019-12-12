@@ -1,8 +1,6 @@
 # Tagrity
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/tagrity`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Automatically regenerate tags on file changes.
 
 ## Installation
 
@@ -22,7 +20,52 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+Commands:
+  tagrity help [COMMAND]  # Describe available commands or one specific command
+  tagrity start           # Start watching a directory (default to pwd)
+  tagrity status          # List running tagrity processes and the directories being watched
+  tagrity stop            # Stop watching a directory (default to pwd)
+```
+
+### start
+
+```
+Usage:
+  tagrity start
+
+Options:
+  [--dir=DIR]
+  [--fg], [--no-fg]
+  [--configfile=CONFIGFILE]
+  [--tagf=TAGF]
+  [--default-cmd=DEFAULT_CMD]
+  [--excluded-exts=one two three]
+  [--excluded-paths=one two three]
+
+Start watching a directory (default to pwd)
+```
+
+### stop
+
+```
+Usage:
+  tagrity stop
+
+Options:
+  [--dir=DIR]
+
+Stop watching a directory (default to pwd)
+```
+
+### status
+
+```
+Usage:
+  tagrity status
+
+List running tagrity processes and the directories being watched
+```
 
 ## Development
 
