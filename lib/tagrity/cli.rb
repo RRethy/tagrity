@@ -14,9 +14,10 @@ module Tagrity
     option :excluded_exts, type: :array
     option :excluded_paths, type: :array
     option :git, type: :boolean
+    option :fresh, type: :boolean
     def start()
       setup_config
-      Command::Start::call(dir, fg?)
+      Command::Start::call(dir, fg?, fresh?)
     end
 
     desc "stop", "Stop watching a directory (default to pwd)"
@@ -40,6 +41,10 @@ module Tagrity
 
     def fg?
       options[:fg]
+    end
+
+    def fresh?
+      options[:fresh]
     end
 
     def setup_config

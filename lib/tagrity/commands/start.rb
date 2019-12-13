@@ -10,13 +10,15 @@ module Tagrity
       class ErrorProcessAlreadyRunning < StandardError; end
 
       class << self
-        def call(dir, fg)
+        def call(dir, fg, fresh)
           assert_not_running(dir)
 
           Process.daemon(nochdir: true) unless fg
 
           callbacks = Provider.provide(:file_callbacks)
           PidFile.write(PidFile.new(dir, Process.pid))
+
+          callbacks.on_fresh if fresh
 
           listener = Listen.to(
             dir,

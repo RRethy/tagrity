@@ -11,6 +11,16 @@ module Tagrity
     end
 
     def generate_all
+      if check_git?
+        files = `git ls-files 2> /dev/null`.split
+      else
+        files = `find * 2> /dev/null`.split
+      end
+      if $?.exitstatus == 0
+        generate(files)
+      else
+        puts "Failed to get a listing of all files under pwd for use with --fresh."
+      end
     end
 
     def generate(files)
@@ -42,14 +52,22 @@ module Tagrity
     private
 
     def generate_tags?(file)
-      copacetic_with_git?(file) && file != tagf && !dont_index_file(file) && File.readable?(file)
+      copacetic_with_git?(file) && indexable?(file)
+    end
+
+    def indexable?(file)
+      file != tagf && !is_file_excluded(file) && File.readable?(file)
     end
 
     def copacetic_with_git?(file)
-      !(@config.respect_git? && Helper.is_git_dir? && !Helper.is_file_tracked?(file))
+      !(check_git? && !Helper.is_file_tracked?(file))
     end
 
-    def dont_index_file(fname)
+    def check_git?
+      @config.respect_git? && Helper.is_git_dir?
+    end
+
+    def is_file_excluded(fname)
       @config.is_ft_excluded(fname.partition('.').last) || @config.is_path_excluded(fname)
     end
 

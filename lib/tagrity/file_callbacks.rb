@@ -7,6 +7,10 @@ module Tagrity
       @tag_generator = tag_generator
     end
 
+    def on_fresh
+      @tag_generator.generate_all
+    end
+
     def on_files_modified(files)
       @tag_generator.generate(files)
     end
