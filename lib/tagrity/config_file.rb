@@ -13,13 +13,14 @@ module Tagrity
       configfile:,
       default_cmd:,
       tagf:,
+      ext_cmds:,
       excluded_exts:,
       excluded_paths:,
       git:
     )
       fname = config_file_name(configfile)
       @config = if fname.nil? then {} else YAML.load_file(fname) end
-      ensure_ext_cmds
+      ensure_ext_cmds(ext_cmds)
       ensure_default_cmd(default_cmd)
       ensure_tagf(tagf)
       ensure_excluded_exts(excluded_exts)
@@ -55,8 +56,8 @@ module Tagrity
 
     private
 
-    def ensure_ext_cmds
-      set_option('ext_cmds', nil, {})
+    def ensure_ext_cmds(ext_cmds)
+      set_option('ext_cmds', ext_cmds, {})
     end
 
     def ensure_default_cmd(default_cmd)
