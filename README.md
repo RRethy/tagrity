@@ -84,3 +84,44 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the Tagrity project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/tagrity/blob/master/CODE_OF_CONDUCT.md).
+
+
+
+
+tagrity config to use (default to ~/.config/tagrity/config.yml if available).
+A config file is a yaml file with the following possible values.
+Some of these can be overridden with options, however the configfile
+provided via --configfile will override the global config file in
+~/.config/tagrity/config.yml
+```
+# ext_cmds allows different tag generators to be used depending on the file extension.
+# Multiple extensions does not work, *.html.erb files will be picked up as erb.
+# ext_cmds:
+#   <file extension>: <command to use to generate tags for this file extension>
+# DEFAULT: empty
+ext_cmds:
+  rb: ripper-tags
+  c: ctags
+  go: gotags
+
+# default_cmd specifies the default command to be used to generate tags
+# default_cmd: <command>
+# DEFAULT: ctags
+default_cmd: ctags
+
+# tagf is the filename (relative) to generate tags into
+# tagf: <filename>
+# DEFAULT: tags
+tagf: tags
+
+# excluded_exts specifies which file extensions to not generate tags for.
+# excluded_exts: [<file extension>, ...]
+# DEFAULT: []
+excluded_exts: [rb, h, js]
+
+# excluded_paths specifies which paths to ignore.
+# It's usually better to avoid this since by default tagrity will only look
+# at files which are tracked by git.
+# excluded_paths: [<path>, ...]
+# DEFAULT: []
+excluded_paths: [vendor, node_modules]

@@ -10,7 +10,7 @@ module Tagrity
         RUN_DIR
       end
 
-      def is_executable(cmd)
+      def is_executable?(cmd)
         !%x{command -v #{cmd}}.empty?
       end
 

@@ -11,6 +11,9 @@ module Tagrity
     end
 
     def generate_all
+      if File.exists?(tagf)
+        File.delete(tagf)
+      end
       if check_git?
         files = `git ls-files 2> /dev/null`.split
       else
@@ -73,7 +76,7 @@ module Tagrity
 
     def assert_executables
       %w(cat grep mv).each do |exe|
-        if !Helper.is_executable(exe)
+        if !Helper.is_executable?(exe)
           raise ExecutableNonExist, "tagrity depends on the executable #{exe}"
         end
       end

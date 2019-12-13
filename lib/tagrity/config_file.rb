@@ -7,6 +7,7 @@ module Tagrity
     include Singleton
 
     class ErrorTagFileNotWritable < StandardError; end
+    class ErrorGitNotExecutable < StandardError; end
 
     def init(
       configfile:,
@@ -28,7 +29,7 @@ module Tagrity
 
     def ft_to_cmd(ext)
       ft_cmd = @config['ext_cmds'][ext]
-      return @config['default_cmd'] if ft_cmd.nil? || !Helper.is_executable(ft_cmd)
+      return @config['default_cmd'] if ft_cmd.nil? || !Helper.is_executable?(ft_cmd)
       ft_cmd
     end
 
@@ -79,6 +80,9 @@ module Tagrity
 
     def ensure_git(git)
       set_option('git', git, true)
+      if @config['git'] && !Helper.is_executable?('git')
+        raise ErrorGitNotExecutable, "'git' must be executable to use the --git option."
+      end
     end
 
     def set_option(key, local_val, default)
