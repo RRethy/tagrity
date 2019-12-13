@@ -7,7 +7,7 @@ module Tagrity
   class CLI < Thor
     desc "start", "Start watching a directory (default to pwd)"
     option :dir, desc: "directory to watch (omit to use pwd)"
-    option :fresh, type: :boolean, default: false, desc: "index the whole codebase before watching the file system."
+    option :fresh, type: :boolean, default: false, desc: "index the whole codebase before watching the file system. This may take a while if the codebase is large."
     option :tagf, desc: "filename (relative) to generate tags into (default: 'tags')."
     option :git, type: :boolean, default: true, desc: "only index files which are being tracked by git"
     option :fg, type: :boolean, desc: "keep the tagrity process running in the foreground"
