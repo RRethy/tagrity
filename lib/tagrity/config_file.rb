@@ -73,7 +73,7 @@ module Tagrity
 
     def ensure_tagf(tagf)
       set_option('tagf', tagf, 'tags')
-      unless File.writable?(@config['tagf'])
+      if File.exists?(@config['tagf']) && !File.writable?(@config['tagf'])
         raise ErrorTagFileNotWritable, "#{@config['tagf']} must be writable to be used as the tag file."
       end
     end
