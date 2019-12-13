@@ -19,7 +19,7 @@ module Tagrity
         .select { |file| generate_tags?(file) }
         .group_by { |file| @config.ft_to_cmd(file.partition('.').last) }
         .each do |cmd, fnames|
-        `#{cmd} -f #{tagf} --append #{fnames.join(' ')}`
+        `#{cmd} -f #{tagf} --append #{fnames.join(' ')} &> /dev/null`
         if $?.exitstatus == 0
           puts "{#{cmd}} generated tags for #{fnames} into #{tagf}"
         else
@@ -30,7 +30,7 @@ module Tagrity
 
     def delete_files_tags(files)
       return if files.empty?
-      `cat #{tagf} | grep -v -F #{files.map { |f| " -e \"	#{f}	\""}.join(' ')} > #{tmp_file}`
+      `cat #{tagf} | grep -v -F #{files.map { |f| " -e \"	#{f}	\""}.join(' ')} > #{tmp_file} 2> /dev/null`
         if $?.exitstatus == 0
           `mv -f #{tmp_file} #{tagf}`
           puts "Deleted tags for #{files} from #{tagf}"
@@ -42,7 +42,11 @@ module Tagrity
     private
 
     def generate_tags?(file)
-      file != tagf && !dont_index_file(file) && File.readable?(file)
+      copacetic_with_git?(file) && file != tagf && !dont_index_file(file) && File.readable?(file)
+    end
+
+    def copacetic_with_git?(file)
+      !(@config.respect_git? && Helper.is_git_dir? && !Helper.is_file_tracked?(file))
     end
 
     def dont_index_file(fname)

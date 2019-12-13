@@ -13,6 +13,7 @@ module Tagrity
     option :default_cmd
     option :excluded_exts, type: :array
     option :excluded_paths, type: :array
+    option :git, type: :boolean
     def start()
       setup_config
       Command::Start::call(dir, fg?)
@@ -47,7 +48,8 @@ module Tagrity
         default_cmd: options[:default_cmd],
         tagf: options[:tagf],
         excluded_exts: options[:excluded_exts],
-        excluded_paths: options[:excluded_paths]
+        excluded_paths: options[:excluded_paths],
+        git: options[:git]
       )
     end
   end

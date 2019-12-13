@@ -13,7 +13,8 @@ module Tagrity
       default_cmd:,
       tagf:,
       excluded_exts:,
-      excluded_paths:
+      excluded_paths:,
+      git:
     )
       fname = config_file_name(configfile)
       @config = if fname.nil? then {} else YAML.load_file(fname) end
@@ -22,6 +23,7 @@ module Tagrity
       ensure_tagf(tagf)
       ensure_excluded_exts(excluded_exts)
       ensure_excluded_paths(excluded_paths)
+      ensure_git(git)
     end
 
     def ft_to_cmd(ext)
@@ -40,6 +42,10 @@ module Tagrity
 
     def tagf
       @config['tagf']
+    end
+
+    def respect_git?
+      @config['git']
     end
 
     def to_s
@@ -69,6 +75,10 @@ module Tagrity
       unless File.writable?(@config['tagf'])
         raise ErrorTagFileNotWritable, "#{@config['tagf']} must be writable to be used as the tag file."
       end
+    end
+
+    def ensure_git(git)
+      set_option('git', git, true)
     end
 
     def set_option(key, local_val, default)
