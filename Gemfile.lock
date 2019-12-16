@@ -3,6 +3,7 @@ PATH
   specs:
     tagrity (0.1.5)
       listen (~> 3.0)
+      open4 (~> 1.3)
       thor (~> 0.20)
 
 GEM
@@ -10,9 +11,10 @@ GEM
   specs:
     diff-lcs (1.3)
     ffi (1.11.3)
-    listen (3.2.0)
+    listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
+    open4 (1.3.4)
     rake (10.5.0)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
