@@ -1,4 +1,6 @@
 require 'tmpdir'
+require 'tempfile'
+require 'fileutils'
 require 'tagrity/helper'
 
 module Tagrity
@@ -28,15 +30,19 @@ module Tagrity
 
     def generate(files)
       return if files.empty?
+      FileUtils.touch(tagf)
       files
         .select { |file| generate_tags?(file) }
         .group_by { |file| @config.ft_to_cmd(file.partition('.').last) }
         .each do |cmd, fnames|
-        `#{cmd} -f #{tagf} --append #{fnames.join(' ')} &> /dev/null`
-        if $?.exitstatus == 0
-          puts "{#{cmd}} generated tags for #{fnames} into #{tagf}"
-        else
-          puts "{#{cmd}} failed to generate tags for #{fnames} into #{tagf}"
+        Tempfile.create do |tmpf|
+          IO::write(tmpf.path, fnames.join("\n"))
+          system(cmd, '-f', tagf, '--append', '-L', tmpf.path, out: File::NULL)
+          if $?.exitstatus == 0
+            puts "{#{cmd}} generated tags for #{fnames} into #{tagf}"
+          else
+            puts "{#{cmd}} failed to generate tags for #{fnames} into #{tagf}"
+          end
         end
       end
     end
