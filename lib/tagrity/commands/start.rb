@@ -24,6 +24,9 @@ module Tagrity
             dir,
             relative: true,
           ) do |modified, added, removed|
+            puts "modified absolute path: #{modified}"
+            puts "added absolute path: #{added}"
+            puts "removed absolute path: #{removed}"
             callbacks.on_files_modified(modified)
             callbacks.on_files_added(added)
             callbacks.on_files_removed(removed)

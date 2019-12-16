@@ -1,6 +1,7 @@
 require 'tmpdir'
 require 'tempfile'
 require 'fileutils'
+require 'open4'
 require 'tagrity/helper'
 
 module Tagrity
@@ -30,7 +31,7 @@ module Tagrity
 
     def generate(files)
       return if files.empty?
-      FileUtils.touch(tagf)
+      FileUtils.touch(tagf) unless File.exists?(tagf) # hack since ripper-tags has a bug
       files
         .select { |file| generate_tags?(file) }
         .group_by { |file| @config.ft_to_cmd(file.partition('.').last) }
