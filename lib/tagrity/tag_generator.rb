@@ -1,7 +1,7 @@
 require 'tmpdir'
 require 'tempfile'
 require 'fileutils'
-require 'open4'
+require 'pry'
 require 'tagrity/helper'
 
 module Tagrity
@@ -31,7 +31,6 @@ module Tagrity
 
     def generate(files)
       return if files.empty?
-      FileUtils.touch(tagf) unless File.exists?(tagf) # hack since ripper-tags has a bug
       files
         .select { |file| generate_tags?(file) }
         .group_by { |file| @config.ft_to_cmd(file.partition('.').last) }
@@ -50,13 +49,18 @@ module Tagrity
 
     def delete_files_tags(files)
       return if files.empty?
-      `cat #{tagf} | grep -v -F #{files.map { |f| " -e \"	#{f}	\""}.join(' ')} > #{tmp_file} 2> /dev/null`
-        if $?.exitstatus == 0
-          `mv -f #{tmp_file} #{tagf}`
-          puts "Deleted tags for #{files} from #{tagf}"
-        else
-          puts "Failed to delete tags for #{files} from #{tagf}"
+      Tempfile.create do |tmpf|
+        File.open(tagf) do |f|
+          f.each_line do |line|
+            unless files.any? { |fname| line.include?("\t#{fname}\t") }
+              tmpf.write line
+            end
+          end
         end
+        tmpf.rewind
+        FileUtils.mv(tmpf.path, tagf, force: true)
+        puts "Deleted tags for #{files} from #{tagf}"
+      end
     end
 
     private
