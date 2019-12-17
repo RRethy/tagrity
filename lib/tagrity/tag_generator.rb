@@ -96,11 +96,5 @@ module Tagrity
     def tagf
       @config.tagf
     end
-
-    def tmp_file
-      tmpdir = "#{Dir.tmpdir}/tagrity"
-      FileUtils.mkdir_p(tmpdir)
-      "#{tmpdir}/#{Process.pid}.tmptags"
-    end
   end
 end
