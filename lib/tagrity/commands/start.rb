@@ -1,7 +1,6 @@
 require 'listen'
 require 'tagrity/pid_file'
 require 'tagrity/helper'
-require 'tagrity/file_callbacks'
 require 'tagrity/provider'
 
 module Tagrity
@@ -15,10 +14,10 @@ module Tagrity
 
           Process.daemon(nochdir: true) unless fg
 
-          callbacks = Provider.provide(:file_callbacks)
+          tag_generator = Provider.provide(:tag_generator)
           PidFile.write(PidFile.new(dir, Process.pid))
 
-          callbacks.on_fresh if fresh
+          tag_generator.generate_all if fresh
 
           listener = Listen.to(
             dir,
@@ -27,9 +26,9 @@ module Tagrity
             puts "modified absolute path: #{modified}"
             puts "added absolute path: #{added}"
             puts "removed absolute path: #{removed}"
-            callbacks.on_files_modified(modified)
-            callbacks.on_files_added(added)
-            callbacks.on_files_removed(removed)
+            tag_generator.generate(modified)
+            tag_generator.generate(added)
+            tag_generator.delete_files_tags(removed)
           end
           listener.start
           sleep
