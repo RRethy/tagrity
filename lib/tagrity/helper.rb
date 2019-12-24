@@ -28,21 +28,16 @@ module Tagrity
       end
 
       def is_git_dir?
-        return @is_git_dir unless @is_git_dir.nil?
         `git rev-parse --git-dir &> /dev/null`
-        if $?.exitstatus == 0
-          @is_git_dir = true
-        else
-          @is_git_dir = false
-        end
+        $?.exitstatus == 0
       end
 
-      def is_file_ignored?(file)
+      def file_ignored?(file)
         `git check-ignore -q #{file} &> /dev/null`
         $?.exitstatus == 0
       end
 
-      def is_file_tracked?(file)
+      def file_tracked?(file)
         `git ls-files --error-unmatch #{file} &> /dev/null`
         $?.exitstatus == 0
       end

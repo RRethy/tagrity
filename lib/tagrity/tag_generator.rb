@@ -33,7 +33,7 @@ module Tagrity
       return if files.empty?
       files
         .select { |file| generate_tags?(file) }
-        .group_by { |file| @config.ft_to_cmd(file.partition('.').last) }
+        .group_by { |file| @config.command_for_extension(file.partition('.').last) }
         .each do |cmd, fnames|
         Tempfile.create do |tmpf|
           IO::write(tmpf.path, fnames.join("\n"))
@@ -74,7 +74,15 @@ module Tagrity
     end
 
     def copacetic_with_git?(file)
-      !(check_git? && !Helper.is_file_tracked?(file))
+      return true if !check_git?
+      case @config.git_strategy
+      when 'TRACKED'
+        Helper.file_tracked?(file)
+      when 'IGNORED'
+        !Helper.file_ignored?(file)
+      else
+        false
+      end
     end
 
     def check_git?
@@ -82,7 +90,7 @@ module Tagrity
     end
 
     def is_file_excluded(fname)
-      @config.is_ft_excluded(fname.partition('.').last) || @config.is_path_excluded(fname)
+      @config.ignore_extension?(fname.partition('.').last) || @config.path_ignored?(fname)
     end
 
     def assert_executables

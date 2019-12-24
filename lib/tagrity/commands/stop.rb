@@ -2,7 +2,8 @@ module Tagrity
   module Command
     class Stop
       class << self
-        def call(dir)
+        def call
+          dir = Dir.pwd
           pid_files = PidFile.alive_pid_files(dir: dir)
           if pid_files.empty?
             puts "😕 tagrity doesn't seem to be watching #{dir}"

@@ -9,7 +9,8 @@ module Tagrity
       class ErrorProcessAlreadyRunning < StandardError; end
 
       class << self
-        def call(dir, fg, fresh)
+        def call(fg, fresh)
+          dir = Dir.pwd
           assert_not_running(dir)
 
           Process.daemon(nochdir: true) unless fg

@@ -1,31 +1,39 @@
-# ext_cmds allows different tag generators to be used depending on the file extension.
-# Multiple extensions does not work, *.html.erb files will be picked up as erb.
-# ext_cmds:
-#   <file extension>: <command to use to generate tags for this file extension>
+# which command to use to generate tags for a specific file extension
+# overrides default_command
 # DEFAULT: empty
-ext_cmds:
+extension_commands:
   rb: ripper-tags
   c: ctags
   go: gotags
 
-# default_cmd specifies the default command to be used to generate tags
-# default_cmd: <command>
+# default command to generate tags
 # DEFAULT: ctags
-default_cmd: ctags
+default_command: ctags
 
-# tagf is the filename (relative) to generate tags into
-# tagf: <filename>
+# filename (relative to pwd) to generate tags into
 # DEFAULT: tags
 tagf: tags
 
-# excluded_exts specifies which file extensions to not generate tags for.
-# excluded_exts: [<file extension>, ...]
+# list of extensions to exclusively generate tags for
+# this will take precendence over extensions_blacklist if it is non-empty
 # DEFAULT: []
-excluded_exts: [rb, h, js]
+extensions_whitelist: [rb, c, h, js]
 
-# excluded_paths specifies which paths to ignore.
-# It's usually better to avoid this since by default tagrity will only look
-# at files which are tracked by git.
-# excluded_paths: [<path>, ...]
+# list of extensions to not generate tags for
+# this can will be ignored if extensions_whitelist is non-empty
+# DEFAULT: []
+extensions_blacklist: [erb, html, txt]
+
+# how to integrate with git
+# git_strategy: TRACKED | IGNORED | NA
+# TRACKED: only index files tracked by git
+# IGNORED: don't index files which are ignored by git
+# NA: don't use git, index all files under pwd
+# DEFAULT: TRACKED
+git_strategy: TRACKED
+
+# which paths (relative to pwd) to ignore
+# It's usually better to avoid this since tagrity integrates with git by
+# default using the strategy specified by git_strategy
 # DEFAULT: []
 excluded_paths: [vendor, node_modules]
