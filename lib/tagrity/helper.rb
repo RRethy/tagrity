@@ -10,6 +10,11 @@ module Tagrity
         RUN_DIR
       end
 
+      def log_dir
+        ensure_data_dirs
+        LOG_DIR
+      end
+
       def is_executable?(cmd)
         !%x{command -v #{cmd}}.empty?
       end
@@ -46,6 +51,7 @@ module Tagrity
 
       def ensure_data_dirs
         FileUtils.mkdir_p(RUN_DIR)
+        FileUtils.mkdir_p(LOG_DIR)
       end
     end
   end

@@ -1,3 +1,5 @@
+require 'tagrity/tlogger'
+
 module Tagrity
   module Command
     class Stop
@@ -11,6 +13,7 @@ module Tagrity
             pid_files.each do |pid_file|
               pid_file.delete
               puts "Successfully killed #{pid_file.pid}"
+              Tlogger.instance.info("Successfully killed #{pid_file.pid}")
             end
           end
         end
