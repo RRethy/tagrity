@@ -14,16 +14,82 @@ $ gem install tagrity
 tagrity start
 ```
 
-That's it! By default, tagrity will only index files tracked by git. You may wish to al
+That's it! It will monitor pwd and by default only index files tracked by git.
+
+To stop watching pwd, use
+
+```sh
+tagrity stop
+```
+
+To view directories being watched, use
+
+```sh
+tagrity status
+```
+
+## Configuration
+
+Configuration can be done through use of a `tagrity_config.yml` file that looks like the following:
+
+[`tagrity_config.yml`](https://github.com/RRethy/tagrity/blob/master/sample_config.yml)
+
+```yaml
+# which command to use to generate tags for a specific file extension
+# overrides default_command
+# commands must support --append, -f, -L
+# DEFAULT: empty
+extension_commands:
+  rb: ripper-tags
+  c: ctags
+  go: gotags
+
+# default command to generate tags
+# command must support --append, -f, -L
+# DEFAULT: ctags
+default_command: ctags
+
+# filename (relative to pwd) to generate tags into
+# DEFAULT: tags
+tagf: tags
+
+# list of extensions to exclusively generate tags for
+# this will take precendence over extensions_blacklist if it is non-empty
+# DEFAULT: []
+extensions_whitelist: [rb, c, h, js]
+
+# list of extensions to not generate tags for
+# this can will be ignored if extensions_whitelist is non-empty
+# DEFAULT: []
+extensions_blacklist: [erb, html, txt]
+
+# how to integrate with git
+# git_strategy: TRACKED | IGNORED | NA
+# TRACKED: only index files tracked by git
+# IGNORED: don't index files which are ignored by git
+# NA: don't use git, index all files under pwd
+#
+# DEFAULT: TRACKED
+git_strategy: TRACKED
+
+# which paths (relative to pwd) to ignore
+# It's usually better to avoid this since tagrity integrates with git by
+# default using the strategy specified by git_strategy
+# DEFAULT: []
+excluded_paths: [vendor, node_modules]
+```
+
+Tagrity will look for a global config file at `$XDG_CONFIG_HOME/tagrity/tagrity_config.yml` (usually this will be `~/.config/tagrity/tagrity_config.yml`). This can be overridden by a local config file by the same name under pwd.
 
 ## Usage
 
 ```
 Commands:
   tagrity help [COMMAND]  # Describe available commands or one specific command
-  tagrity start           # Start watching a directory (default to pwd)
+  tagrity logs            # Print the logs for pwd
+  tagrity start           # Start watching pwd
   tagrity status          # List running tagrity processes and the directories being watched
-  tagrity stop            # Stop watching a directory (default to pwd)
+  tagrity stop            # Stop watching pwd
 ```
 
 ### start
@@ -33,15 +99,10 @@ Usage:
   tagrity start
 
 Options:
-  [--dir=DIR]
-  [--fg], [--no-fg]
-  [--configfile=CONFIGFILE]
-  [--tagf=TAGF]
-  [--default-cmd=DEFAULT_CMD]
-  [--excluded-exts=one two three]
-  [--excluded-paths=one two three]
+  [--fg], [--no-fg]        # keep the tagrity process running in the foreground
+  [--fresh], [--no-fresh]  # index the whole codebase before watching the file system. This will be slow if the codebase is large.
 
-Start watching a directory (default to pwd)
+Start watching pwd
 ```
 
 ### stop
@@ -50,10 +111,7 @@ Start watching a directory (default to pwd)
 Usage:
   tagrity stop
 
-Options:
-  [--dir=DIR]
-
-Stop watching a directory (default to pwd)
+Stop watching pwd
 ```
 
 ### status
@@ -65,15 +123,22 @@ Usage:
 List running tagrity processes and the directories being watched
 ```
 
-## Development
+### logs
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```
+Usage:
+  tagrity logs
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+Options:
+  [-n=N]  # the number of log lines to print
+          # Default: 10
+
+Print the logs for pwd
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/tagrity. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/RRethy/tagrity. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -81,13 +146,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Tagrity project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/tagrity/blob/master/CODE_OF_CONDUCT.md).
-
-
-
-
-tagrity config to use (default to ~/.config/tagrity/config.yml if available).
-A config file is a yaml file with the following possible values.
-Some of these can be overridden with options, however the configfile
-provided via --configfile will override the global config file in
-~/.config/tagrity/config.yml
+Everyone interacting in the Tagrity project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/RRethy/tagrity/blob/master/CODE_OF_CONDUCT.md).
