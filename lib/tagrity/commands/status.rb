@@ -9,6 +9,8 @@ module Tagrity
             pid_file
           end
 
+          return if pid_files.empty?
+
           max_pid_len = pid_files.max do |a, b|
             a.pid.digits.count <=> b.pid.digits.count
           end.pid.digits.count
