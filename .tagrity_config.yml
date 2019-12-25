@@ -1,0 +1,38 @@
+# which command to use to generate tags for a specific file extension
+# overrides default_command
+# DEFAULT: empty
+extension_commands:
+  rb: ripper-tags
+  c: ctags
+
+# default command to generate tags
+# DEFAULT: ctags
+default_command: ctags
+
+# filename (relative to pwd) to generate tags into
+# DEFAULT: tags
+tagf: tags
+
+# list of extensions to exclusively generate tags for
+# this will take precendence over extensions_blacklist if it is non-empty
+# DEFAULT: []
+extensions_whitelist: [rb]
+
+# list of extensions to not generate tags for
+# this can will be ignored if extensions_whitelist is non-empty
+# DEFAULT: []
+# extensions_blacklist: [erb, html, txt]
+
+# how to integrate with git
+# git_strategy: TRACKED | IGNORED | NA
+# TRACKED: only index files tracked by git
+# IGNORED: don't index files which are ignored by git
+# NA: don't use git, index all files under pwd
+# DEFAULT: TRACKED
+git_strategy: TRACKED
+
+# which paths (relative to pwd) to ignore
+# It's usually better to avoid this since tagrity integrates with git by
+# default using the strategy specified by git_strategy
+# DEFAULT: []
+excluded_paths: [test_files]
