@@ -71,7 +71,7 @@ module Tagrity
     end
 
     def indexable?(file)
-      file != tagf && !is_file_excluded(file) && File.readable?(file)
+      file != tagf && !file_excluded?(file) && File.readable?(file)
     end
 
     def copacetic_with_git?(file)
@@ -87,16 +87,16 @@ module Tagrity
     end
 
     def check_git?
-      @config.respect_git? && Helper.is_git_dir?
+      @check_git ||= @config.respect_git? && Helper.git_dir?
     end
 
-    def is_file_excluded(fname)
+    def file_excluded?(fname)
       @config.ignore_extension?(fname.partition('.').last) || @config.path_ignored?(fname)
     end
 
     def assert_executables
       %w(cat grep mv).each do |exe|
-        if !Helper.is_executable?(exe)
+        if !Helper.executable?(exe)
           raise ExecutableNonExist, "tagrity depends on the executable #{exe}"
         end
       end
@@ -107,7 +107,7 @@ module Tagrity
     end
 
     def logger
-      Tlogger.instance
+      @logger ||= Tlogger.instance
     end
   end
 end

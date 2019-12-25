@@ -24,7 +24,7 @@ module Tagrity
           pid = pid_from_path(path)
           pid_file_dir = File.read(path)
 
-          if dir.nil? || is_same_dirs(pid_file_dir, dir)
+          if dir.nil? || same_dirs?(pid_file_dir, dir)
             if Helper.alive?(pid)
               pid_files << PidFile.new(pid_file_dir, pid)
             else
@@ -38,7 +38,7 @@ module Tagrity
 
       private
 
-      def is_same_dirs(dir1, dir2)
+      def same_dirs?(dir1, dir2)
         File.realdirpath(dir1) == File.realdirpath(dir2)
       end
 

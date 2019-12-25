@@ -15,7 +15,7 @@ module Tagrity
         LOG_DIR
       end
 
-      def is_executable?(cmd)
+      def executable?(cmd)
         !%x{command -v #{cmd}}.empty?
       end
 
@@ -32,7 +32,7 @@ module Tagrity
         true
       end
 
-      def is_git_dir?
+      def git_dir?
         `git rev-parse --git-dir &> /dev/null`
         $?.exitstatus == 0
       end

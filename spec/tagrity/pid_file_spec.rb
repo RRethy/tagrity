@@ -80,7 +80,7 @@ RSpec.describe Tagrity::PidFile do
       .exactly(5).times
       .and_return(true, true, false)
     allow(Tagrity::PidFile)
-      .to receive(:is_same_dirs)
+      .to receive(:same_dirs?)
       .and_return(true, false, true, false, true)
 
     expect(File)
