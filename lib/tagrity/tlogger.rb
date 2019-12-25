@@ -16,15 +16,15 @@ module Tagrity
       logger.error(msg)
     end
 
+    def logf
+      # TODO this can cause duplicates, unlikely tho
+      "#{Helper.log_dir}/#{Dir.pwd.gsub(/\//, '--')}.log"
+    end
+
     private
 
     def logger
       @logger ||= Logger.new(@fg ? STDOUT : logf, 'weekly')
-    end
-
-    def logf
-      # TODO this can cause duplicates, unlikely tho
-      "#{Helper.log_dir}/#{Dir.pwd.gsub(/\//, '--')}.log"
     end
   end
 end

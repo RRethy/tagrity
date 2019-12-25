@@ -22,7 +22,7 @@ module Tagrity
       else
         'find * 2> /dev/null'
       end
-      files = `#{cmd}`.split
+      files = `#{cmd}`.split("\n")
       if $?.exitstatus == 0
         generate(files)
       else

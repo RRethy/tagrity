@@ -2,6 +2,7 @@ require 'thor'
 require 'tagrity/commands/start'
 require 'tagrity/commands/stop'
 require 'tagrity/commands/status'
+require 'tagrity/commands/logs'
 
 module Tagrity
   class CLI < Thor
@@ -20,6 +21,12 @@ module Tagrity
     desc "status", "List running tagrity processes and the directories being watched"
     def status
       Command::Status::call
+    end
+
+    desc "logs", "Print the logs for pwd"
+    option :n, type: :numeric, default: 10, desc: "the number of log lines to print"
+    def logs
+      Command::Logs::call(options['n'])
     end
   end
 end
