@@ -23,7 +23,7 @@ module Tagrity
     end
 
     def command_for_extension(extension)
-      cmd = extension_commands[extension]
+      cmd = extension_commands[extension.to_s]
       if cmd.nil?
         default_command
       else
@@ -33,14 +33,14 @@ module Tagrity
 
     def ignore_extension?(extension)
       unless extensions_whitelist.empty?
-        return !extensions_whitelist.include?(extension)
+        return !extensions_whitelist.include?(extension.to_s)
       end
 
-      extensions_blacklist.include?(extension)
+      extensions_blacklist.include?(extension.to_s)
     end
 
     def path_ignored?(path)
-      excluded_paths.any? { |pat| /#{pat}/ =~ path }
+      excluded_paths.any? { |pat| !(/^#{pat}/ =~ path.to_s).nil? }
     end
 
     def respect_git?
