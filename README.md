@@ -1,5 +1,7 @@
 # Tagrity
 
+[![Build Status](https://travis-ci.com/RRethy/tagrity.svg?branch=master)](https://travis-ci.com/RRethy/tagrity)
+
 Automatically regenerate tags on file changes.
 
 ## Installation
@@ -38,7 +40,8 @@ Configuration can be done through use of a `tagrity_config.yml` file that looks 
 # which command to use to generate tags for a specific file extension
 # overrides default_command
 # commands must support --append, -f, -L
-# DEFAULT: empty
+#
+# Default: empty
 extension_commands:
   rb: ripper-tags
   c: ctags
@@ -46,21 +49,25 @@ extension_commands:
 
 # default command to generate tags
 # command must support --append, -f, -L
-# DEFAULT: ctags
+#
+# Default: ctags
 default_command: ctags
 
 # filename (relative to pwd) to generate tags into
-# DEFAULT: tags
+#
+# Default: tags
 tagf: tags
 
 # list of extensions to exclusively generate tags for
 # this will take precendence over extensions_blacklist if it is non-empty
-# DEFAULT: []
+#
+# Default: []
 extensions_whitelist: [rb, c, h, js]
 
 # list of extensions to not generate tags for
 # this can will be ignored if extensions_whitelist is non-empty
-# DEFAULT: []
+#
+# Default: []
 extensions_blacklist: [erb, html, txt]
 
 # how to integrate with git
@@ -69,13 +76,14 @@ extensions_blacklist: [erb, html, txt]
 # IGNORED: don't index files which are ignored by git
 # NA: don't use git, index all files under pwd
 #
-# DEFAULT: TRACKED
+# Default: TRACKED
 git_strategy: TRACKED
 
 # which paths (relative to pwd) to ignore
 # It's usually better to avoid this since tagrity integrates with git by
 # default using the strategy specified by git_strategy
-# DEFAULT: []
+#
+# Default: []
 excluded_paths: [vendor, node_modules]
 ```
 
