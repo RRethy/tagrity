@@ -1,3 +1,4 @@
+require 'cli/ui'
 require 'tagrity/tlogger'
 
 module Tagrity
@@ -8,11 +9,11 @@ module Tagrity
           dir = Dir.pwd
           pid_files = PidFile.alive_pid_files(dir: dir)
           if pid_files.empty?
-            puts "😕 tagrity doesn't seem to be watching #{dir}"
+            puts ::CLI::UI.fmt "{{red:#{"😕 tagrity doesn't seem to be watching #{dir}"}}}"
           else
             pid_files.each do |pid_file|
               pid_file.delete
-              puts "Successfully killed #{pid_file.pid}"
+              puts ::CLI::UI.fmt "{{green:#{"Successfully killed #{pid_file.pid}"}}}"
               Tlogger.instance.info("Successfully killed #{pid_file.pid}")
             end
           end

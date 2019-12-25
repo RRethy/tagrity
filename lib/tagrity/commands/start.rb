@@ -1,4 +1,5 @@
 require 'listen'
+require 'cli/ui'
 require 'tagrity/pid_file'
 require 'tagrity/helper'
 require 'tagrity/provider'
@@ -47,7 +48,7 @@ module Tagrity
           listener.start
           sleep
         rescue ErrorProcessAlreadyRunning => e
-          puts e.message
+          puts ::CLI::UI.fmt "{{red:#{e.message}}}"
           logger.error(e.message)
         rescue Interrupt => e
           logger.info("Process interrupted. Killing #{Process.pid}")
