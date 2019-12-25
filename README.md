@@ -2,6 +2,8 @@
 
 Automatically regenerate tags on file changes.
 
+Testing travis
+
 ## Installation
 
 ```sh
