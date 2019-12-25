@@ -22,7 +22,10 @@ module Tagrity
           logger.fg = fg
           logger.info("Watching #{dir} with process pid #{Process.pid}")
 
-          tag_generator.generate_all if fresh
+          if fresh
+            logger.info("Generating tags fresh for #{dir}")
+            tag_generator.generate_all
+          end
 
           listener = Listen.to(
             dir,
@@ -44,6 +47,7 @@ module Tagrity
           listener.start
           sleep
         rescue ErrorProcessAlreadyRunning => e
+          puts e.message
           logger.error(e.message)
         rescue Interrupt => e
           logger.info("Process interrupted. Killing #{Process.pid}")

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tagrity (0.1.8)
+    tagrity (0.1.9)
       listen (~> 3.0)
       pry (~> 0.9.9)
       thor (~> 0.20)
