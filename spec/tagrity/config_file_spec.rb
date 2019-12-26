@@ -1,5 +1,7 @@
 require 'tagrity/config_file'
 
+# TODO try reading an invalid config file
+# TODO check each value after reading a command
 RSpec.describe Tagrity::ConfigFile do
   it 'returns the correct command for the extension' do
     config = Tagrity::ConfigFile.instance
@@ -53,7 +55,6 @@ RSpec.describe Tagrity::ConfigFile do
       .and_return(['foo', 'bar'])
 
     {
-      foobar: true,
       foo: true,
       fo: false,
       barbar: true,

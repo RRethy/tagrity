@@ -1,0 +1,9 @@
+# Logfile created on 2019-12-27 18:14:45 -0500 by logger.rb/66358
+I, [2019-12-27T18:14:45.469301 #88354]  INFO -- : {ripper-tags} failed to generate tags for ["foo/barbaz.rb", "foo/foobar.rb", "foobar.rb"] into tags
+I, [2019-12-27T18:24:10.893593 #88870]  INFO -- : {ripper-tags} failed to generate tags for ["foo/barbaz.rb", "foo/foobar.rb", "foobar.rb"] into tags
+I, [2019-12-27T18:24:42.921395 #89206]  INFO -- : {ripper-tags} failed to generate tags for ["foo/barbaz.rb", "foo/foobar.rb", "foobar.rb"] into tags
+I, [2019-12-27T18:42:42.916663 #90739]  INFO -- : {ripper-tags} failed to generate tags for ["foo/barbaz.rb", "foo/foobar.rb", "foobar.rb"] into tags
+I, [2019-12-28T15:00:26.553162 #91100]  INFO -- : {ripper-tags} failed to generate tags for ["foo/barbaz.rb", "foo/foobar.rb", "foobar.rb"] into tags
+I, [2019-12-28T15:00:41.765227 #92092]  INFO -- : {ripper-tags} failed to generate tags for ["foo/barbaz.rb", "foo/foobar.rb", "foobar.rb"] into tags
+I, [2019-12-28T15:01:27.037618 #92298]  INFO -- : {ctags} generated tags for ["barbaz.c", "foo/foobar.c"] into tags
+I, [2019-12-28T15:01:27.332335 #92298]  INFO -- : {ripper-tags} generated tags for ["foo/barbaz.rb", "foo/foobar.rb", "foobar.rb"] into tags

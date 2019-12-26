@@ -12,7 +12,7 @@ module Tagrity
       end
 
       def provide_tag_generator
-        TagGenerator.new
+        TagGenerator.new(ConfigFile.instance)
       end
     end
   end

@@ -3,14 +3,14 @@ require 'tempfile'
 require 'fileutils'
 require 'tagrity/helper'
 require 'tagrity/tlogger'
+require 'pry'
 
 module Tagrity
   class TagGenerator
     class ExecutableNonExist < StandardError; end
 
-    def initialize
-      assert_executables
-      @config = ConfigFile.instance
+    def initialize(config)
+      @config = config
     end
 
     def generate_all
@@ -92,14 +92,6 @@ module Tagrity
 
     def file_excluded?(fname)
       @config.ignore_extension?(fname.partition('.').last) || @config.path_ignored?(fname)
-    end
-
-    def assert_executables
-      %w(cat grep mv).each do |exe|
-        if !Helper.executable?(exe)
-          raise ExecutableNonExist, "tagrity depends on the executable #{exe}"
-        end
-      end
     end
 
     def tagf

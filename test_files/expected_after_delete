@@ -1,0 +1,6 @@
+barbaz_fun_one	foo/barbaz.rb	/^def barbaz_fun_one$/;"	f	class:Object
+barbaz_fun_two	foo/barbaz.rb	/^def barbaz_fun_two$/;"	f	class:Object
+barbaz_one	barbaz.c	/^int barbaz_one() {$/;"	f	typeref:typename:int
+barbaz_two	barbaz.c	/^int barbaz_two() {$/;"	f	typeref:typename:int
+foobar_fun_one	foo/foobar.rb	/^def foobar_fun_one$/;"	f	class:Object
+foobar_fun_two	foo/foobar.rb	/^def foobar_fun_two$/;"	f	class:Object

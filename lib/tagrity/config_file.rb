@@ -12,14 +12,12 @@ module Tagrity
     LOCAL_CONFIG_PATH = File.expand_path("./.#{CONFIG_FNAME}")
     GLOBAL_CONFIG_PATH = File.expand_path("#{ENV['XDG_CONFIG_HOME'] || "#{ENV['HOME']}/.config"}/tagrity/#{CONFIG_FNAME}")
 
-    def init
-      ensure_extension_commands
-      ensure_default_command
-      ensure_tagf
-      ensure_extensions_whitelist
-      ensure_extensions_blacklist
-      ensure_git_strategy
-      ensure_excluded_paths
+    def reload_local
+      read_config(fname: local_config_path)
+    end
+
+    def reload_global
+      read_config(fname: global_config_path)
     end
 
     def command_for_extension(extension)
@@ -81,6 +79,16 @@ module Tagrity
 
     private
 
+    def init
+      ensure_extension_commands
+      ensure_default_command
+      ensure_tagf
+      ensure_extensions_whitelist
+      ensure_extensions_blacklist
+      ensure_git_strategy
+      ensure_excluded_paths
+    end
+
     def ensure_extension_commands
       ensure_option('extension_commands', {})
     end
@@ -109,7 +117,7 @@ module Tagrity
     end
 
     def ensure_excluded_paths
-      ensure_option('extension_commands', [])
+      ensure_option('excluded_paths', [])
     end
 
     def ensure_option(name, default)
@@ -122,14 +130,27 @@ module Tagrity
       @config ||= read_config
     end
 
-    def read_config
-      if File.readable?(LOCAL_CONFIG_PATH)
-        @config = YAML.load_file(LOCAL_CONFIG_PATH)
-      elsif File.readable?(GLOBAL_CONFIG_PATH)
-        @config = YAML.load_file(GLOBAL_CONFIG_PATH)
+    def read_config(fname: nil)
+      @config = {}
+      if fname.nil?
+        if File.readable?(local_config_path)
+          read_config(fname: local_config_path)
+        elsif File.readable?(global_config_path)
+          read_config(fname: global_config_path)
+        end
       else
-        @config = {}
+        @config = YAML.load_file(fname)
       end
+      init
+      @config
+    end
+
+    def global_config_path
+      File.expand_path("#{ENV['XDG_CONFIG_HOME'] || "#{ENV['HOME']}/.config"}/tagrity/#{CONFIG_FNAME}")
+    end
+
+    def local_config_path
+      File.expand_path("./.#{CONFIG_FNAME}")
     end
   end
 end
