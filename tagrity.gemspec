@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Adam P. Regasz-Rethy"]
   spec.email         = ["rethy.spud@gmail.com"]
 
-  spec.summary       = %q{Regenerate tags on file changes.}
-  spec.description   = %q{Ditto}
+  spec.summary       = %q{Update tags on file changes.}
+  spec.description   = %q{Update your tags file when files change. tags files are used primarily with Vim as a navigation tool.}
   spec.homepage      = "https://github.com/RRethy/tagrity"
   spec.license       = "MIT"
 
