@@ -2,15 +2,15 @@ require 'tmpdir'
 require 'tempfile'
 require 'fileutils'
 require 'tagrity/helper'
-require 'tagrity/tlogger'
 require 'pry'
 
 module Tagrity
   class TagGenerator
     class ExecutableNonExist < StandardError; end
 
-    def initialize(config)
+    def initialize(config, logger)
       @config = config
+      @logger = logger
     end
 
     def generate_all
@@ -26,7 +26,7 @@ module Tagrity
       if $?.exitstatus == 0
         generate(files)
       else
-        logger.error("Failed to get a listing of all files under pwd for use with --fresh. Used #{cmd}.")
+        @logger.error("Failed to get a listing of all files under pwd for use with --fresh. Used #{cmd}.")
       end
     end
 
@@ -40,9 +40,9 @@ module Tagrity
           IO::write(tmpf.path, fnames.join("\n"))
           system(cmd, '-f', tagf, '--append', '-L', tmpf.path, out: File::NULL)
           if $?.exitstatus == 0
-            logger.info("{#{cmd}} generated tags for #{fnames} into #{tagf}")
+            @logger.info("{#{cmd}} generated tags for #{fnames} into #{tagf}")
           else
-            logger.info("{#{cmd}} failed to generate tags for #{fnames} into #{tagf}")
+            @logger.info("{#{cmd}} failed to generate tags for #{fnames} into #{tagf}")
           end
         end
       end
@@ -60,7 +60,7 @@ module Tagrity
         end
         tmpf.rewind
         FileUtils.mv(tmpf.path, tagf, force: true)
-        logger.info("Deleted tags for #{files} from #{tagf}")
+        @logger.info("Deleted tags for #{files} from #{tagf}")
       end
     end
 
@@ -96,10 +96,6 @@ module Tagrity
 
     def tagf
       @config.tagf
-    end
-
-    def logger
-      @logger ||= Tlogger.instance
     end
   end
 end
