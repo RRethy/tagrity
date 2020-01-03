@@ -36,6 +36,8 @@ Configuration can be done through use of a `tagrity_config.yml` file that looks 
 
 **NOTE:** Tagrity will look for a global config file at `$XDG_CONFIG_HOME/tagrity/tagrity_config.yml` (usually this will be `~/.config/tagrity/tagrity_config.yml`). This can be overridden by a local config in the current directory under the name `.tagrity_config.yml`.
 
+**NOTE:** Tagrity needs to be restarted for configuration changes to take effect.
+
 [`tagrity_config.yml`](https://github.com/RRethy/tagrity/blob/master/sample_config.yml)
 
 ```yaml
