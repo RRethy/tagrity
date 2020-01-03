@@ -1,6 +1,7 @@
 # which command to use to generate tags for a specific file extension
 # overrides default_command
-# commands must support --append, -f, -L
+# tag generation commands must support --append, -f, -L
+# NOTE: Exuberant-ctags does NOT satisfy this, instead use Universal-ctags
 #
 # Default: empty
 extension_commands:

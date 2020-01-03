@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/RRethy/tagrity.svg?branch=master)](https://travis-ci.com/RRethy/tagrity)
 
-Automatically regenerate tags on file changes.
+Automatically regenerate your tags on file changes.
 
 ## Installation
 
@@ -41,7 +41,8 @@ Configuration can be done through use of a `tagrity_config.yml` file that looks 
 ```yaml
 # which command to use to generate tags for a specific file extension
 # overrides default_command
-# commands must support --append, -f, -L
+# tag generation commands must support --append, -f, -L
+# NOTE: Exuberant-ctags does NOT satisfy this, instead use Universal-ctags
 #
 # Default: empty
 extension_commands:
