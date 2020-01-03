@@ -34,6 +34,8 @@ tagrity status
 
 Configuration can be done through use of a `tagrity_config.yml` file that looks like the following:
 
+**NOTE:** Tagrity will look for a global config file at `$XDG_CONFIG_HOME/tagrity/tagrity_config.yml` (usually this will be `~/.config/tagrity/tagrity_config.yml`). This can be overridden by a local config in the current directory under the name `.tagrity_config.yml`.
+
 [`tagrity_config.yml`](https://github.com/RRethy/tagrity/blob/master/sample_config.yml)
 
 ```yaml
@@ -86,8 +88,6 @@ git_strategy: TRACKED
 # Default: []
 excluded_paths: [vendor, node_modules]
 ```
-
-Tagrity will look for a global config file at `$XDG_CONFIG_HOME/tagrity/tagrity_config.yml` (usually this will be `~/.config/tagrity/tagrity_config.yml`). This can be overridden by a local config file by the same name under pwd.
 
 ## Usage
 
