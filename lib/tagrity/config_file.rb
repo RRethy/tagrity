@@ -9,8 +9,6 @@ module Tagrity
     class ErrorTagFileNotWritable < StandardError; end
 
     CONFIG_FNAME = 'tagrity_config.yml'
-    LOCAL_CONFIG_PATH = File.expand_path("./.#{CONFIG_FNAME}")
-    GLOBAL_CONFIG_PATH = File.expand_path("#{ENV['XDG_CONFIG_HOME'] || "#{ENV['HOME']}/.config"}/tagrity/#{CONFIG_FNAME}")
 
     def reload_local
       read_config(fname: local_config_path)
