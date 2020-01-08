@@ -11,8 +11,8 @@ RSpec.describe Tagrity::TagGenerator do
     logger = Tagrity::Tlogger.instance
     allow(logger)
       .to receive(:info)
-    allow(logger)
-      .to receive(:error)
+    expect(logger)
+      .to_not receive(:error)
     allow(logger)
       .to receive(:logf)
       .and_return('')
@@ -58,6 +58,17 @@ RSpec.describe Tagrity::TagGenerator do
       delete_tags_comments
       expect(FileUtils.cmp('./tags', './expected_after_delete'))
         .to eq(true)
+    end
+  end
+
+  it "deleting tagf causes a no-op" do
+    Dir.chdir('./test_files/') do
+      config = Tagrity::ConfigFile.instance
+      config.reload_local
+      generator = Tagrity::TagGenerator.new(config, logger)
+      generator.generate_all
+      `rm -f tags`
+      generator.delete_files_tags(['tags', 'foobar.rb', 'foo/foobar.c'])
     end
   end
 end

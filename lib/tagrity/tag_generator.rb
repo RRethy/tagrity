@@ -49,7 +49,7 @@ module Tagrity
     end
 
     def delete_files_tags(files)
-      return if files.empty?
+      return if files.empty? || !File.readable?(tagf)
       Tempfile.create do |tmpf|
         File.open(tagf) do |f|
           f.each_line do |line|
