@@ -16,7 +16,7 @@ $ gem install tagrity
 tagrity start
 ```
 
-That's it! It will monitor pwd and by default only index files tracked by git.
+That's it! It will monitor pwd and index any files which change. Check out [Configuration](#configuration) to restrict which files get indexed.
 
 To stop watching pwd, use
 
@@ -78,11 +78,11 @@ extensions_blacklist: [erb, html, txt]
 # how to integrate with git
 # git_strategy: TRACKED | IGNORED | NA
 # TRACKED: only index files tracked by git
-# IGNORED: don't index files which are ignored by git
+# IGNORED: only index files which are not ignored by git
 # NA: don't use git, index all files under pwd
 #
-# Default: TRACKED
-git_strategy: TRACKED
+# Default: NA
+git_strategy: IGNORED
 
 # which paths (relative to pwd) to ignore
 # It's usually better to avoid this since tagrity integrates with git by

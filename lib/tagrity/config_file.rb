@@ -119,7 +119,7 @@ module Tagrity
     end
 
     def ensure_git_strategy
-      ensure_option('git_strategy', 'TRACKED')
+      ensure_option('git_strategy', 'NA')
     end
 
     def ensure_excluded_paths
