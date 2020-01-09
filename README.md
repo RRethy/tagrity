@@ -141,8 +141,9 @@ Usage:
   tagrity logs
 
 Options:
-  [-n=N]  # the number of log lines to print
-          # Default: 10
+  [-n=N]                   # the number of log lines to print
+                           # Default: 10
+  [--debug], [--no-debug]  # if debug logs be printed too
 
 Print the logs for pwd
 ```
