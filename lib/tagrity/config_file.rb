@@ -111,11 +111,11 @@ module Tagrity
     end
 
     def ensure_extensions_whitelist
-      ensure_option('whitelist_extensions', [])
+      ensure_option('extensions_whitelist', [])
     end
 
     def ensure_extensions_blacklist
-      ensure_option('blacklist_extensions', [])
+      ensure_option('extensions_blacklist', [])
     end
 
     def ensure_git_strategy
