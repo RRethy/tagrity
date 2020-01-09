@@ -25,8 +25,9 @@ module Tagrity
 
     desc "logs", "Print the logs for pwd"
     option :n, type: :numeric, default: 10, desc: "the number of log lines to print"
+    option :debug, type: :boolean, default: false, desc: "if debug logs be printed too"
     def logs
-      Command::Logs::call(options['n'])
+      Command::Logs::call(options['n'], options['debug'])
     end
   end
 end
