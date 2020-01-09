@@ -8,12 +8,14 @@ module Tagrity
       def provide(want)
         case want
         when :tag_generator
-          provide_tag_generator
+          TagGenerator.new(provide(:config_file), provide(:tlogger))
+        when :tlogger
+          Tlogger.instance
+        when :config_file
+          config = ConfigFile.instance
+          config.initial_load
+          config
         end
-      end
-
-      def provide_tag_generator
-        TagGenerator.new(ConfigFile.instance, Tlogger.instance)
       end
     end
   end

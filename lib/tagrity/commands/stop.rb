@@ -1,5 +1,6 @@
 require 'cli/ui'
 require 'tagrity/tlogger'
+require 'tagrity/provider'
 
 module Tagrity
   module Command
@@ -14,9 +15,13 @@ module Tagrity
             pid_files.each do |pid_file|
               pid_file.delete
               puts ::CLI::UI.fmt "{{green:#{"Successfully killed #{pid_file.pid}"}}}"
-              Tlogger.instance.info("Successfully killed #{pid_file.pid}")
+              logger.info("Successfully killed #{pid_file.pid}")
             end
           end
+        end
+
+        def logger
+          @logger ||= Provider.provide(:tlogger)
         end
       end
     end

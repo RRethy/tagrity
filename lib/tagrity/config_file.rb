@@ -1,6 +1,8 @@
 require 'yaml'
 require 'singleton'
 require 'tagrity/helper'
+require 'tagrity/tlogger'
+require 'tagrity/provider'
 
 module Tagrity
   class ConfigFile
@@ -16,6 +18,12 @@ module Tagrity
 
     def reload_global
       read_config(fname: global_config_path)
+    end
+
+    def initial_load
+      if @config.nil?
+        read_config
+      end
     end
 
     def command_for_extension(extension)
@@ -44,35 +52,35 @@ module Tagrity
     end
 
     def extension_commands
-      config['extension_commands']
+      @config['extension_commands']
     end
 
     def default_command
-      config['default_command']
+      @config['default_command']
     end
 
     def tagf
-      config['tagf']
+      @config['tagf']
     end
 
     def extensions_whitelist
-      config['extensions_whitelist']
+      @config['extensions_whitelist']
     end
 
     def extensions_blacklist
-      config['extensions_blacklist']
+      @config['extensions_blacklist']
     end
 
     def git_strategy
-      config['git_strategy']
+      @config['git_strategy']
     end
 
     def excluded_paths
-      config['excluded_paths']
+      @config['excluded_paths']
     end
 
     def to_s
-      config.to_s
+      @config.to_s
     end
 
     private
@@ -119,28 +127,27 @@ module Tagrity
     end
 
     def ensure_option(name, default)
-      if config[name].nil? || !config[name].is_a?(default.class)
-        config[name] = default
+      if @config[name].nil? || !@config[name].is_a?(default.class)
+        @config[name] = default
       end
-    end
-
-    def config
-      @config ||= read_config
     end
 
     def read_config(fname: nil)
       @config = {}
+      config_fname = '{default configuration}'
       if fname.nil?
         if File.readable?(local_config_path)
-          read_config(fname: local_config_path)
+          config_fname = local_config_path
+          @config = YAML.load_file(local_config_path)
         elsif File.readable?(global_config_path)
-          read_config(fname: global_config_path)
+          config_fname = global_config_path
+          @config = YAML.load_file(global_config_path)
         end
       else
         @config = YAML.load_file(fname)
       end
       init
-      @config
+      logger.debug("Loaded config from #{config_fname} with settings #{@config.to_s}")
     end
 
     def global_config_path
@@ -149,6 +156,10 @@ module Tagrity
 
     def local_config_path
       File.expand_path("./.#{CONFIG_FNAME}")
+    end
+
+    def logger
+      @logger ||= Provider.provide(:tlogger)
     end
   end
 end

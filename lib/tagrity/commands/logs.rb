@@ -1,4 +1,5 @@
 require 'tagrity/tlogger'
+require 'tagrity/provider'
 
 module Tagrity
   module Command
@@ -21,7 +22,7 @@ module Tagrity
         end
 
         def logf
-          Tlogger.instance.logf
+          Provider.provide(:tlogger).logf
         end
       end
     end

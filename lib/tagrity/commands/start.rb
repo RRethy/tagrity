@@ -16,11 +16,11 @@ module Tagrity
           assert_not_running(dir)
 
           Process.daemon(nochdir: true) unless fg
+          logger.fg = fg
 
           tag_generator = Provider.provide(:tag_generator)
           PidFile.write(PidFile.new(dir, Process.pid))
 
-          logger.fg = fg
           logger.info("Watching #{dir} with process pid #{Process.pid}")
 
           if fresh
@@ -66,7 +66,7 @@ module Tagrity
         end
 
         def logger
-          @logger ||= Tlogger.instance
+          @logger ||= Provider.provide(:tlogger)
         end
       end
     end
