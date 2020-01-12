@@ -20,7 +20,7 @@ module Tagrity
       cmd = if check_git?
         'git ls-files 2> /dev/null'
       else
-        'find * 2> /dev/null'
+        'find * -type f 2> /dev/null'
       end
       files = `#{cmd}`.split("\n")
       if $?.exitstatus == 0
