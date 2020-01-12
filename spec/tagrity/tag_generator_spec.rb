@@ -21,12 +21,15 @@ RSpec.describe Tagrity::TagGenerator do
 
   it 'generates tags correctly in a non-git repo' do
     Dir.chdir('./test_files/') do
+      git_dir = `git rev-parse --git-dir`.rstrip
+      `mv #{git_dir} #{git_dir}.hide`
       config = Tagrity::ConfigFile.instance
       config.reload_local
       `rm -f tags`
       generator = Tagrity::TagGenerator.new(config, logger)
       generator.generate_all
       delete_tags_comments
+      `mv #{git_dir}.hide #{git_dir}`
       expect(FileUtils.cmp('./tags', './expected_genall_nongit_tags'))
         .to eq(true)
     end

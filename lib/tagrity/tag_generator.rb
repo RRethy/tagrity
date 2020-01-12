@@ -33,12 +33,12 @@ module Tagrity
     def generate(files)
       return if files.empty?
       files
-        .select { |file| generate_tags?(file) }
+        .select { |file| generate_tags?(file)}
         .group_by { |file| @config.command_for_extension(file.split('.').last) }
         .each do |cmd, fnames|
         Tempfile.create do |tmpf|
           IO::write(tmpf.path, fnames.join("\n"))
-          system(cmd, '-f', tagf, '--append', '-L', tmpf.path, out: File::NULL)
+          system(cmd, '-f', tagf, '--append', '-L', tmpf.path, out: File::NULL, err: File::NULL)
           if $?.exitstatus == 0
             @logger.info("{#{cmd}} generated tags for #{fnames} into #{tagf}")
           else
