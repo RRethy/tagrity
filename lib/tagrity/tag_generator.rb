@@ -34,7 +34,7 @@ module Tagrity
       return if files.empty?
       files
         .select { |file| generate_tags?(file) }
-        .group_by { |file| @config.command_for_extension(file.partition('.').last) }
+        .group_by { |file| @config.command_for_extension(file.split('.').last) }
         .each do |cmd, fnames|
         Tempfile.create do |tmpf|
           IO::write(tmpf.path, fnames.join("\n"))
@@ -91,7 +91,7 @@ module Tagrity
     end
 
     def file_excluded?(fname)
-      @config.ignore_extension?(fname.partition('.').last) || @config.path_ignored?(fname)
+      @config.ignore_extension?(fname.split('.').last) || @config.path_ignored?(fname)
     end
 
     def tagf
