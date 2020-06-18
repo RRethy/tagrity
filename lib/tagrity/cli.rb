@@ -6,6 +6,11 @@ require 'tagrity/commands/logs'
 
 module Tagrity
   class CLI < Thor
+    desc "version", "print tagrity version"
+    def version()
+      puts VERSION
+    end
+
     desc "start", "Start watching pwd"
     option :fg, type: :boolean, default: false, desc: "keep the tagrity process running in the foreground"
     option :fresh, type: :boolean, default: false, desc: "index the whole codebase before watching the file system. This will be slow if the codebase is large."
