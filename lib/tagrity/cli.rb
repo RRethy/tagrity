@@ -3,6 +3,7 @@ require 'tagrity/commands/start'
 require 'tagrity/commands/stop'
 require 'tagrity/commands/status'
 require 'tagrity/commands/logs'
+require 'tagrity/version'
 
 module Tagrity
   class CLI < Thor
