@@ -9,7 +9,7 @@ module Tagrity
   class CLI < Thor
     desc "version", "print tagrity version"
     def version()
-      puts VERSION
+      puts Tagrity::VERSION
     end
 
     desc "start", "Start watching pwd"
