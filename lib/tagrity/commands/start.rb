@@ -15,7 +15,7 @@ module Tagrity
           dir = Dir.pwd
           assert_not_running(dir)
 
-          Process.daemon(:nochdir => true) unless fg
+          Process.daemon(true) unless fg
           logger.fg = fg
 
           tag_generator = Provider.provide(:tag_generator)
