@@ -5,7 +5,7 @@ cache: bundler
 rvm:
   - 2.7.1
 before_install:
-  - gem install bundler -v 2.0.2
+  - gem install bundler -v 2.1.4
   - gem install ripper-tags -v 0.8.1
   - brew unlink python@2
   - brew install --HEAD universal-ctags/universal-ctags/universal-ctags
