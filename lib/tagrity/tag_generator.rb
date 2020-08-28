@@ -52,7 +52,7 @@ module Tagrity
           if $?.exitstatus == 0
             @logger.info("{#{cmd}} generated tags for #{fnames} into #{tagf}")
           else
-            @logger.info("{#{cmd}} failed (#{$?.exitstatus}) to generate tags for #{fnames} into #{tagf}")
+            @logger.error("{#{cmd}} failed (#{$?.exitstatus}) to generate tags for #{fnames} into #{tagf}")
           end
         end
       end
