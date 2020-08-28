@@ -14,28 +14,36 @@ module Tagrity
     end
 
     def generate_all
-      if File.exists?(tagf)
+      files = []
+      if Helper.git_dir?
+        untracked_files = `git ls-files --others --exclude-standard 2> /dev/null`.split("\n")
+        if $?.exitstatus != 0
+          @logger.error("Failed to get a listing of all untracked files under pwd for use with --fresh.")
+          untracked_files = []
+        end
+        tracked_files = `git ls-files 2> /dev/null`.split("\n")
+        if $?.exitstatus != 0
+          @logger.error("Failed to get a listing of all tracked files under pwd for use with --fresh.")
+          tracked_files = []
+        end
+        files = tracked_files.concat untracked_files
+      else
+        files = `find * -type f 2> /dev/null`.split("\n")
+      end
+      if not files.empty? and File.exists?(tagf)
         File.delete(tagf)
       end
-      git_listed = false
-      cmd = if check_git?
-        git_listed = true
-        'git ls-files 2> /dev/null'
-      else
-        'find * -type f 2> /dev/null'
-      end
-      files = `#{cmd}`.split("\n")
-      if $?.exitstatus == 0
-        generate(files, git_listed)
-      else
-        @logger.error("Failed to get a listing of all files under pwd for use with --fresh. Used #{cmd}.")
-      end
+
+      generate(files, false)
     end
 
-    def generate(files, git_listed)
+    def generate(files, check_git)
       return if files.empty?
+      if not Helper.git_dir?
+        check_git = false
+      end
       files
-        .select { |file| generate_tags?(file, git_listed)}
+        .select { |file| !check_git || generate_tags?(file)}
         .group_by { |file| @config.command_for_extension(file.split('.').last) }
         .each do |cmd, fnames|
         Tempfile.create do |tmpf|
@@ -68,8 +76,8 @@ module Tagrity
 
     private
 
-    def generate_tags?(file, git_listed)
-      (git_listed || copacetic_with_git?(file)) && indexable?(file)
+    def generate_tags?(file)
+      return indexable?(file)
     end
 
     def indexable?(file)

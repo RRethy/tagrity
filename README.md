@@ -32,19 +32,19 @@ tagrity status
 
 ## Configuration
 
-Configuration can be done through use of a `tagrity_config.yml` file that looks like the following:
+Configuration can be done through use of a local `.tagrity_config.yml` file that looks like the following:
 
-**NOTE:** Tagrity will look for a global config file at `$XDG_CONFIG_HOME/tagrity/tagrity_config.yml` (usually this will be `~/.config/tagrity/tagrity_config.yml`). This can be overridden by a local config in the current directory under the name `.tagrity_config.yml`.
+**NOTE:** Tagrity will also look for a global config file at `$XDG_CONFIG_HOME/tagrity/tagrity_config.yml` (usually this will be `~/.config/tagrity/tagrity_config.yml`). This will be overriden by a local config file.
 
 **NOTE:** Tagrity needs to be restarted for configuration changes to take effect.
 
-[`tagrity_config.yml`](https://github.com/RRethy/tagrity/blob/master/sample_config.yml)
+[Sample `tagrity_config.yml`](https://github.com/RRethy/tagrity/blob/master/sample_config.yml)
 
 ```yaml
 # which command to use to generate tags for a specific file extension
 # overrides default_command
 # tag generation commands must support --append, -f, -L
-# NOTE: Exuberant-ctags does NOT satisfy this, instead use Universal-ctags
+# NOTE: Exuberant-ctags does NOT satisfy this requirement, instead use Universal-ctags
 #
 # Default: empty
 extension_commands:
@@ -74,15 +74,6 @@ extensions_whitelist: [rb, c, h, js]
 #
 # Default: []
 extensions_blacklist: [erb, html, txt]
-
-# how to integrate with git
-# git_strategy: TRACKED | IGNORED | NA
-# TRACKED: only index files tracked by git
-# IGNORED: only index files which are not ignored by git
-# NA: don't use git, index all files under pwd
-#
-# Default: NA
-git_strategy: IGNORED
 
 # which paths (relative to pwd) to ignore
 # It's usually better to avoid this since tagrity integrates with git by

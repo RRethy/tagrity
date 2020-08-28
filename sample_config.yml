@@ -1,7 +1,7 @@
 # which command to use to generate tags for a specific file extension
 # overrides default_command
 # tag generation commands must support --append, -f, -L
-# NOTE: Exuberant-ctags does NOT satisfy this, instead use Universal-ctags
+# NOTE: Exuberant-ctags does NOT satisfy this requirement, instead use Universal-ctags
 #
 # Default: empty
 extension_commands:
@@ -31,15 +31,6 @@ extensions_whitelist: [rb, c, h, js]
 #
 # Default: []
 extensions_blacklist: [erb, html, txt]
-
-# how to integrate with git
-# git_strategy: TRACKED | IGNORED | NA
-# TRACKED: only index files tracked by git
-# IGNORED: only index files which are not ignored by git
-# NA: don't use git, index all files under pwd
-#
-# Default: NA
-git_strategy: IGNORED
 
 # which paths (relative to pwd) to ignore
 # It's usually better to avoid this since tagrity integrates with git by
