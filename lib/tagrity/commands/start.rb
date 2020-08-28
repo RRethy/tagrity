@@ -34,11 +34,11 @@ module Tagrity
           ) do |modified, added, removed|
             unless modified.empty?
               logger.info("modified absolute path: #{modified}")
-              tag_generator.generate(modified)
+              tag_generator.generate(modified, false)
             end
             unless added.empty?
               logger.info("added absolute path: #{added}")
-              tag_generator.generate(added)
+              tag_generator.generate(added, false)
             end
             unless removed.empty?
               logger.info("removed absolute path: #{removed}")

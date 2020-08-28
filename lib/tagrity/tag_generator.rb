@@ -17,23 +17,25 @@ module Tagrity
       if File.exists?(tagf)
         File.delete(tagf)
       end
+      git_listed = false
       cmd = if check_git?
+        git_listed = true
         'git ls-files 2> /dev/null'
       else
         'find * -type f 2> /dev/null'
       end
       files = `#{cmd}`.split("\n")
       if $?.exitstatus == 0
-        generate(files)
+        generate(files, git_listed)
       else
         @logger.error("Failed to get a listing of all files under pwd for use with --fresh. Used #{cmd}.")
       end
     end
 
-    def generate(files)
+    def generate(files, git_listed)
       return if files.empty?
       files
-        .select { |file| generate_tags?(file)}
+        .select { |file| generate_tags?(file, git_listed)}
         .group_by { |file| @config.command_for_extension(file.split('.').last) }
         .each do |cmd, fnames|
         Tempfile.create do |tmpf|
@@ -66,8 +68,8 @@ module Tagrity
 
     private
 
-    def generate_tags?(file)
-      copacetic_with_git?(file) && indexable?(file)
+    def generate_tags?(file, git_listed)
+      (git_listed || copacetic_with_git?(file)) && indexable?(file)
     end
 
     def indexable?(file)
