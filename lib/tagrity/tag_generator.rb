@@ -43,7 +43,7 @@ module Tagrity
         check_git = false
       end
       files
-        .select { |file| !check_git || generate_tags?(file)}
+        .select { |file| generate_tags?(file, check_git) }
         .group_by { |file| @config.command_for_extension(file.split('.').last) }
         .each do |cmd, fnames|
         Tempfile.create do |tmpf|
@@ -76,8 +76,8 @@ module Tagrity
 
     private
 
-    def generate_tags?(file)
-      return indexable?(file)
+    def generate_tags?(file, check_git)
+      return (!check_git || !Helper.file_ignored?(file)) && indexable?(file)
     end
 
     def indexable?(file)
