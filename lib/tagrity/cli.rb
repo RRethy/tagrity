@@ -21,8 +21,9 @@ module Tagrity
     end
 
     desc "stop", "Stop watching pwd"
+    option :dir, type: :string, default: Dir.pwd, desc: "directory to stop watching."
     def stop()
-      Command::Stop::call
+      Command::Stop::call(options['dir'])
     end
 
     desc "status", "List running tagrity processes and the directories being watched"

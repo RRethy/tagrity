@@ -6,16 +6,16 @@ module Tagrity
   module Command
     class Stop
       class << self
-        def call
-          dir = Dir.pwd
+        def call(dir)
           pid_files = PidFile.alive_pid_files(dir: dir)
           if pid_files.empty?
             puts ::CLI::UI.fmt "{{red:#{"😕 tagrity doesn't seem to be watching #{dir}"}}}"
           else
             pid_files.each do |pid_file|
               pid_file.delete
-              puts ::CLI::UI.fmt "{{green:#{"Successfully killed #{pid_file.pid}"}}}"
-              logger.info("Successfully killed #{pid_file.pid}")
+              msg = "Successfully killed #{pid_file.pid} for dir #{dir}"
+              puts ::CLI::UI.fmt "{{green:#{msg}}}"
+              logger.info(msg)
             end
           end
         end
