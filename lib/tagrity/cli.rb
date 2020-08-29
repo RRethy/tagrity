@@ -20,7 +20,7 @@ module Tagrity
       Command::Start::call(options['fg'], options['fresh'])
     end
 
-    desc "stop", "Stop watching pwd"
+    desc "stop", "Stop watching a directory (default to pwd)"
     option :dir, type: :string, default: Dir.pwd, desc: "directory to stop watching."
     def stop()
       Command::Stop::call(options['dir'])
