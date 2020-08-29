@@ -3,7 +3,7 @@ require 'tagrity/commands/start'
 require 'tagrity/commands/stop'
 require 'tagrity/commands/status'
 require 'tagrity/commands/logs'
-require 'tagrity/commands/init'
+require 'tagrity/commands/revive'
 require 'tagrity/version'
 
 module Tagrity
@@ -37,9 +37,9 @@ module Tagrity
       Command::Logs::call(options['n'], options['debug'])
     end
 
-    desc "init", "Restart any tagrity processes that died"
-    def init
-      Command::Init::call
+    desc "revive", "Restart any tagrity processes that died"
+    def revive
+      Command::Revive::call
     end
   end
 end

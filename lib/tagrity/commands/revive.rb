@@ -1,6 +1,6 @@
 module Tagrity
   module Command
-    class Init
+    class Revive
       class << self
         def call
           PidFile.revive_dead_pids

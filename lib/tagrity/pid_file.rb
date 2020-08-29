@@ -44,7 +44,7 @@ module Tagrity
           if not Helper.alive?(pid)
             File.delete(path)
             Dir.chdir(File.realdirpath(dir)) do
-              Process.spawn(['tagrity', 'start'])
+              Process.spawn('tagrity start')
             end
           end
         end
