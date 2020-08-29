@@ -3,6 +3,7 @@ require 'tagrity/commands/start'
 require 'tagrity/commands/stop'
 require 'tagrity/commands/status'
 require 'tagrity/commands/logs'
+require 'tagrity/commands/init'
 require 'tagrity/version'
 
 module Tagrity
@@ -34,6 +35,11 @@ module Tagrity
     option :debug, type: :boolean, default: false, desc: "if debug logs be printed too"
     def logs
       Command::Logs::call(options['n'], options['debug'])
+    end
+
+    desc "init", "Restart any tagrity processes that died"
+    def init
+      Command::Init::call
     end
   end
 end

@@ -36,6 +36,20 @@ module Tagrity
         end
       end
 
+      def revive_dead_pids
+        Dir.glob("#{Helper.run_dir}/*").reduce([]) do |pid_files, path|
+          pid = pid_from_path(path)
+          dir = File.read(path)
+
+          if not Helper.alive?(pid)
+            File.delete(path)
+            Dir.chdir(File.realdirpath(dir)) do
+              Process.spawn(['tagrity', 'start'])
+            end
+          end
+        end
+      end
+
       private
 
       def same_dirs?(dir1, dir2)
