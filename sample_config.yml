@@ -33,8 +33,7 @@ extensions_whitelist: [rb, c, h, js]
 extensions_blacklist: [erb, html, txt]
 
 # which paths (relative to pwd) to ignore
-# It's usually better to avoid this since tagrity integrates with git by
-# default using the strategy specified by git_strategy
+# this is usually not needed since tagrity doesn't index files ignored by git
 #
 # Default: []
 excluded_paths: [vendor, node_modules]

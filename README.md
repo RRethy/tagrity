@@ -16,9 +16,9 @@ $ gem install tagrity
 tagrity start
 ```
 
-That's it! It will monitor pwd and index any files which change. Check out [Configuration](#configuration) to restrict which files get indexed.
+That's it! It will monitor the current directory and generate tags for any files which change and are not ignored by git.
 
-To stop watching pwd, use
+To stop watching the current directory, use
 
 ```sh
 tagrity stop
@@ -29,6 +29,30 @@ To view directories being watched, use
 ```sh
 tagrity status
 ```
+
+## Less Quick Start
+
+When your computer is restarted, the process watching the directories will be killed. Add the following to your `~/.bashrc` (or `~/.zshrc`, etc.) to revive any killed processes automatically.
+
+```sh
+(tagrity revive &) &> /dev/null
+```
+
+To stop watching a directory that isn't the current working directory (but shows up in `tagrity status`), you can use:
+
+```sh
+tagrity stop --dir <path>
+```
+
+Where `<path>` is a relative or absolute path. You may be tempted to run `tagrity status` to get the pid and then kill it with `kill <pid>`. However, while this will work, `tagrity revive` will restart these processes (with different pids of course). `tagrity stop` will kill the process and stop `tagrity revive` from starting it up again.
+
+To get info on what tags are being generated, you can run:
+
+```sh
+tagrity logs
+```
+
+For a full set of subcommands, try `tagrity help`.
 
 ## Configuration
 
@@ -76,8 +100,7 @@ extensions_whitelist: [rb, c, h, js]
 extensions_blacklist: [erb, html, txt]
 
 # which paths (relative to pwd) to ignore
-# It's usually better to avoid this since tagrity integrates with git by
-# default using the strategy specified by git_strategy
+# this is usually not needed since tagrity doesn't index files ignored by git
 #
 # Default: []
 excluded_paths: [vendor, node_modules]
@@ -89,9 +112,11 @@ excluded_paths: [vendor, node_modules]
 Commands:
   tagrity help [COMMAND]  # Describe available commands or one specific command
   tagrity logs            # Print the logs for pwd
+  tagrity revive          # Restart any tagrity processes that died
   tagrity start           # Start watching pwd
   tagrity status          # List running tagrity processes and the directories being watched
-  tagrity stop            # Stop watching pwd
+  tagrity stop            # Stop watching a directory (default to pwd)
+  tagrity version         # print tagrity version
 ```
 
 ### start
@@ -113,7 +138,11 @@ Start watching pwd
 Usage:
   tagrity stop
 
-Stop watching pwd
+Options:
+  [--dir=DIR]  # directory to stop watching.
+               # Default: /Users/rethy/ruby/tagrity
+
+Stop watching a directory (default to pwd)
 ```
 
 ### status
