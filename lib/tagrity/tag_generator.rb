@@ -2,7 +2,6 @@ require 'tmpdir'
 require 'tempfile'
 require 'fileutils'
 require 'tagrity/helper'
-require 'pry'
 
 module Tagrity
   class TagGenerator
