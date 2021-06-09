@@ -1,7 +1,5 @@
 # Tagrity
 
-[![Build Status](https://travis-ci.com/RRethy/tagrity.svg?branch=master)](https://travis-ci.com/RRethy/tagrity)
-
 Automatically regenerate your tags on file changes.
 
 ## Installation
